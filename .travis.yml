@@ -10,8 +10,7 @@ script:
 - >
   docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.4.1708
   bash -c
-  "yum -y install yum-downloadonly &&
-   yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
+  "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
    yum install -y https://download.ceph.com/rpm-luminous/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
    mkdir -p /rpms &&
    yum -y install --downloadonly --downloaddir=/rpms audit rsync docker docker-python docker-compose jq python-chardet git tcpdump nc bind-utils &&
