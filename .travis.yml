@@ -13,7 +13,7 @@ script:
   "sed -i "s/keepcache=0/keepcache=1/g" /etc/yum.conf &&
    yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
    yum install -y https://download.ceph.com/rpm-luminous/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
-   yum install -y audit docker docker-python docker-compose jq python-chardet &&
+   yum install -y audit docker docker-python docker-compose jq python-chardet git &&
    yum install -y ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools net-tools tcpdump nfs-utils nc bind-utils && 
    yum install -y kubernetes-cni-0.6.0 kubectl-1.10.3 kubelet-1.10.3 kubeadm-1.10.3 &&
    sed -i "s/keepcache=1/keepcache=0/g" /etc/yum.conf &&
