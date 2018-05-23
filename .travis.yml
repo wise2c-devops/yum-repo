@@ -13,8 +13,9 @@ script:
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
    yum install -y https://download.ceph.com/rpm-luminous/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
    mkdir -p /rpms &&
-   yum -y install --downloadonly --downloaddir=/rpms audit rsync docker docker-python docker-compose jq python-chardet git tcpdump nc bind-utils &&
-   yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools net-tools nfs-utils && 
+   yum -y install --downloadonly --downloaddir=/rpms docker docker-python docker-compose python-chardet python-requests &&
+   yum -y install --downloadonly --downloaddir=/rpms audit rsync jq git tcpdump nc bind-utils net-tools &&
+   yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils && 
    yum -y install --downloadonly --downloaddir=/rpms kubernetes-cni-0.6.0 kubectl-1.10.3 kubelet-1.10.3 kubeadm-1.10.3 &&
    yum install -y createrepo &&
    yum clean all &&
