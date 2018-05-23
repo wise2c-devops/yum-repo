@@ -1,0 +1,28 @@
+sudo: required
+
+services:
+- docker
+
+before_install:
+- docker pull centos:7.4.1708
+
+script:
+- >
+  docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.4.1708
+  bash -c
+  "sed -i "s/keepcache=0/keepcache=1/g" /etc/yum.conf &&
+   yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
+   yum install -y https://download.ceph.com/rpm-luminous/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
+   yum install -y audit docker docker-python docker-compose jq python-chardet &&
+   yum install -y ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools net-tools tcpdump nfs-utils nc bind-utils && 
+   yum install -y kubernetes-cni-0.6.0 kubectl-1.10.3 kubelet-1.10.3 kubeadm-1.10.3 &&
+   sed -i "s/keepcache=1/keepcache=0/g" /etc/yum.conf &&
+   yum install -y createrepo &&
+   mkdir -p /rpms &&
+   find /var/cache/yum -name *.rpm| xargs -I {} cp {} /rpms &&   
+   yum clean all &&
+   createrepo /rpms"
+- sudo chmod -R 755 ${PWD}/rpms
+- docker build -t wise2c/yum-repo:$TRAVIS_BRANCH .
+- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+- docker push wise2c/yum-repo:$TRAVIS_BRANCH
