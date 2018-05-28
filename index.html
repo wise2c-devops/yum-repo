@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Wise2C Yum Repo for Docker/K8S/Ceph/NFS installation</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Wise2C Yum Repo for Docker/K8S/Ceph/NFS installation</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+
+<br />
+<br />
+
+<a href = "rpms" >Enter the RPM folder </a><br />
+
+<br />
+<br />
+
+<p><em>Please create the file wise2c.repo as below and then move to /etc/yum.repos.d/</em></p>
+
+<script type="text/javascript">
+  var ip = location.host;
+  var comment = "###############################################";
+  document.write(comment.fontcolor("Red"));
+  document.write("<pm><em></em></p>");
+  document.write("[wise2c]"+"<br>");
+  document.write("name=wise2c"+"<br>");
+  document.write("baseurl=http://"+(ip)+"/rpms"+"<br>");
+  document.write("enabled=1"+"<br>");
+  document.write("gpgcheck=0"+"<br>");
+  document.write("<pm><em></em></p>");
+  document.write(comment.fontcolor("Red"));
+</script>
+
+</body>
+</html>
