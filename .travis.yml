@@ -4,11 +4,11 @@ services:
 - docker
 
 before_install:
-- docker pull centos:7.4.1708
+- docker pull centos:7.5.1804
 
 script:
 - >
-  docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.4.1708
+  docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804
   bash -c
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
    yum install -y https://download.ceph.com/rpm-luminous/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
@@ -17,7 +17,7 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms docker docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms audit rsync jq git tcpdump nc bind-utils net-tools &&
    yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils && 
-   yum -y install --downloadonly --downloaddir=/rpms kubernetes-cni-0.6.0 kubectl-1.10.5 kubelet-1.10.5 kubeadm-1.10.5 &&
+   yum -y install --downloadonly --downloaddir=/rpms kubernetes-cni-0.6.0 kubectl-1.11.0 kubelet-1.11.0 kubeadm-1.11.0 &&
    yum install -y createrepo &&
    yum clean all &&
    createrepo /rpms"
