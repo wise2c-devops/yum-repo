@@ -5,7 +5,7 @@ Wise2C Yum Repo for Docker/K8S/Ceph/NFS installation
 
 YUM Repo服务器安装好docker，直接运行命令：
 
-docker run -p 2009:2009 --name=yum-repo wise2c/yum-repo:v1.10.5
+docker run -p 2009:2009 --name=yum-repo wise2c/yum-repo:v1.10.6
 
 在需要安装docker/k8s/ceph/nfs的其它主机上：
 
@@ -33,6 +33,6 @@ yum install docker docker-python docker-compose
 
 yum install rsync python-chardet jq nfs-utils
   
-yum install kubernetes-cni-0.6.0 kubectl-1.10.5 kubelet-1.10.5 kubeadm-1.10.5
+yum install kubernetes-cni-0.6.0 kubectl-1.10.6 kubelet-1.10.6 kubeadm-1.10.6
   
 yum install ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror
