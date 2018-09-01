@@ -17,7 +17,7 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms docker docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms audit rsync jq git tcpdump nc bind-utils net-tools &&
    yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils && 
-   yum -y install --downloadonly --downloaddir=/rpms kubernetes-cni-0.6.0 kubectl-1.9.8 kubelet-1.9.8 kubeadm-1.9.8 &&
+   yum -y install --downloadonly --downloaddir=/rpms kubernetes-cni-0.6.0 kubectl-1.9.10 kubelet-1.9.10 kubeadm-1.9.10 &&
    yum install -y createrepo &&
    yum clean all &&
    createrepo /rpms"
