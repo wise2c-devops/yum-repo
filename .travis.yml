@@ -15,7 +15,7 @@ script:
    mkdir -p /rpms &&
    yum remove -y python-chardet &&
    yum -y install --downloadonly --downloaddir=/rpms docker docker-python docker-compose python-chardet python-requests &&
-   yum -y install --downloadonly --downloaddir=/rpms audit rsync jq git tcpdump nc bind-utils net-tools &&
+   yum -y install --downloadonly --downloaddir=/rpms chrony audit rsync jq git tcpdump nc bind-utils net-tools &&
    yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils && 
    yum -y install --downloadonly --downloaddir=/rpms kubernetes-cni-0.6.0 kubectl-1.12.3 kubelet-1.12.3 kubeadm-1.12.3 &&
    yum install -y createrepo &&
