@@ -14,7 +14,7 @@ script:
    yum install -y https://download.ceph.com/rpm-mimic/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
    mkdir -p /rpms &&
    yum remove -y python-chardet chrony &&
-   yum -y install --downloadonly --downloaddir=/rpms docker docker-python docker-compose python-chardet python-requests &&
+   yum -y install --downloadonly --downloaddir=/rpms dockerdocker.x86_64 2:1.13.1-75 docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms chrony audit rsync jq git tcpdump nc bind-utils net-tools &&
    yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils && 
    yum -y install --downloadonly --downloaddir=/rpms kubernetes-cni-0.6.0 kubectl-1.13.0 kubelet-1.13.0 kubeadm-1.13.0 &&
