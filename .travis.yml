@@ -19,8 +19,8 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms/centos74 docker-1.13.1-75.git8633870.el7.centos.x86_64 docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms/centos74 chrony audit rsync jq git tcpdump nc bind-utils net-tools &&
    yum -y install --downloadonly --downloaddir=/rpms/centos74 ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils && 
-   yum -y install kubernetes-cni-0.5.1-0.x86_64 kubectl-1.8.15 kubelet-1.8.15 kubeadm-1.8.15"
-   #yum -y install --downloadonly --downloaddir=/rpms/centos74 kubernetes-cni-0.5.1-0.x86_64 kubectl-1.8.15 kubelet-1.8.15 kubeadm-1.8.15"
+   yum -y install --downloadonly --downloaddir=/rpms/centos74 kubeadm-1.8.15 &&
+   yum -y install --downloadonly --downloaddir=/rpms/centos74 kubectl-1.8.15 kubelet-1.8.15"
    
   docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804  
   bash -c
@@ -31,8 +31,8 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms/centos75 docker-1.13.1-75.git8633870.el7.centos.x86_64 docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms/centos75 chrony audit rsync jq git tcpdump nc bind-utils net-tools &&
    yum -y install --downloadonly --downloaddir=/rpms/centos75 ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils &&
-   yum -y install kubernetes-cni-0.5.1-0.x86_64 kubectl-1.8.15 kubelet-1.8.15 kubeadm-1.8.15"
-   #yum -y install --downloadonly --downloaddir=/rpms/centos75 kubernetes-cni-0.5.1-0.x86_64 kubectl-1.8.15 kubelet-1.8.15 kubeadm-1.8.15"
+   yum -y install --downloadonly --downloaddir=/rpms/centos74 kubeadm-1.8.15 &&
+   yum -y install --downloadonly --downloaddir=/rpms/centos74 kubectl-1.8.15 kubelet-1.8.15"
    
   docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.6.1810  
   bash -c
@@ -43,8 +43,8 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms/centos76 docker-1.13.1-75.git8633870.el7.centos.x86_64 docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms/centos76 chrony audit rsync jq git tcpdump nc bind-utils net-tools &&
    yum -y install --downloadonly --downloaddir=/rpms/centos76 ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils && 
-   yum -y install kubernetes-cni-0.5.1-0.x86_64 kubectl-1.8.15 kubelet-1.8.15 kubeadm-1.8.15"
-   #yum -y install --downloadonly --downloaddir=/rpms/centos76 kubernetes-cni-0.5.1-0.x86_64 kubectl-1.8.15 kubelet-1.8.15 kubeadm-1.8.15 &&
+   yum -y install --downloadonly --downloaddir=/rpms/centos74 kubeadm-1.8.15 &&
+   yum -y install --downloadonly --downloaddir=/rpms/centos74 kubectl-1.8.15 kubelet-1.8.15"
    yum install -y createrepo &&
    yum clean all &&
    createrepo /rpms"
