@@ -31,7 +31,7 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms/centos75 docker docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms/centos75 chrony audit rsync jq git tcpdump nc bind-utils net-tools &&
    yum -y install --downloadonly --downloaddir=/rpms/centos75 ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos74 kubectl-1.8.15 kubelet-1.8.15 &&
+   yum -y install --downloadonly --downloaddir=/rpms/centos75 kubectl-1.8.15 kubelet-1.8.15 &&
    curl -o /rpms/centos75/0746100f7f8f3d05fc69a9f1c1015abac1f9ddc6964ef3ec3afdac33c6fb0cda-kubeadm-1.8.15-0.x86_64.rpm https://packages.cloud.google.com/yum/pool/0746100f7f8f3d05fc69a9f1c1015abac1f9ddc6964ef3ec3afdac33c6fb0cda-kubeadm-1.8.15-0.x86_64.rpm"
    
   docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.6.1810  
@@ -43,7 +43,7 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms/centos76 docker docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms/centos76 chrony audit rsync jq git tcpdump nc bind-utils net-tools &&
    yum -y install --downloadonly --downloaddir=/rpms/centos76 ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools  nfs-utils && 
-   yum -y install --downloadonly --downloaddir=/rpms/centos74 kubectl-1.8.15 kubelet-1.8.15 &&
+   yum -y install --downloadonly --downloaddir=/rpms/centos76 kubectl-1.8.15 kubelet-1.8.15 &&
    curl -o /rpms/centos76/0746100f7f8f3d05fc69a9f1c1015abac1f9ddc6964ef3ec3afdac33c6fb0cda-kubeadm-1.8.15-0.x86_64.rpm https://packages.cloud.google.com/yum/pool/0746100f7f8f3d05fc69a9f1c1015abac1f9ddc6964ef3ec3afdac33c6fb0cda-kubeadm-1.8.15-0.x86_64.rpm &&
    yum install -y createrepo &&
    yum clean all &&
