@@ -36,4 +36,3 @@ yum install rsync python-chardet jq nfs-utils
 yum install kubernetes-cni-0.7.5 kubectl-1.14.0 kubelet-1.14.0 kubeadm-1.14.0
 
 yum install ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror
-
