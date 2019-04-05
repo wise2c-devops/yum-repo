@@ -8,6 +8,10 @@ before_install:
 - docker pull centos:7.5.1804
 - docker pull centos:7.6.1810
 
+env:
+ global:
+   - HELM_URL=https://storage.googleapis.com/kubernetes-helm/helm-v2.13.1-linux-amd64.tar.gz
+ 
 script:
 - >
   docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.4.1708
@@ -51,7 +55,8 @@ script:
 
    yum install -y createrepo &&
    yum clean all &&
-   createrepo /rpms"
+   createrepo /rpms &&
+   curl -o /rpms/helm-linux-amd64.tar.gz $HELM_URL"
    
 - sudo chmod -R 755 ${PWD}/rpms
 - docker build -t wise2c/yum-repo:$TRAVIS_BRANCH .
