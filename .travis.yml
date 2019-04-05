@@ -48,7 +48,7 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms/centos76 docker docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms/centos76 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
    yum -y install --downloadonly --downloaddir=/rpms/centos76 ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
-   yum -y install --downloadonly --downloaddir=/rpms/centos74 kubernetes-cni-${CNI_VERSION} kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
+   yum -y install --downloadonly --downloaddir=/rpms/centos76 kubernetes-cni-${CNI_VERSION} kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
    yum install -y createrepo &&
    yum clean all &&
    createrepo /rpms"
