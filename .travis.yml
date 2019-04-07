@@ -12,7 +12,6 @@ env:
  global:
    - HELM_VERSION=2.13.1
    - CEPH_VERSION=nautilus
-   - CNI_VERSION=0.6.0
    - KUBE_VERSION=1.11.9
 
 script:
