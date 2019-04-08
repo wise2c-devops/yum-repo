@@ -13,7 +13,7 @@ env:
    - HELM_VERSION=2.13.1
    - CEPH_VERSION=nautilus
    - CNI_VERSION=0.7.5
-   - KUBE_VERSION=1.14.0
+   - KUBE_VERSION=1.14.1
    - DOCKER_VERSION=18.09.4-3
  
 script:
