@@ -13,6 +13,7 @@ env:
    - HELM_VERSION=2.13.1
    - CEPH_VERSION=nautilus
    - KUBE_VERSION=1.11.10
+   - ISTIO_VERSION=1.1.4
 
 script:
 - >
@@ -51,7 +52,8 @@ script:
    yum install -y createrepo &&
    yum clean all &&
    createrepo /rpms &&
-   curl -o /rpms/helm-linux-amd64.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz"
+   curl -o /rpms/helm-linux-amd64.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz &&
+   curl -o /rpms/istio-linux.tar.gz https://github.com/istio/istio/releases/download/${ISTIO_VERSION}/istio-${ISTIO_VERSION}-linux.tar.gz"
    
 - sudo chmod -R 755 ${PWD}/rpms
 - docker build -t wise2c/yum-repo:$TRAVIS_BRANCH .
