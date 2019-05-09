@@ -15,7 +15,7 @@ env:
    - CNI_VERSION=0.7.5
    - KUBE_VERSION=1.14.1
    - DOCKER_VERSION=18.09.4-3
-   - ISTIO_VERSION=1.1.4
+   - ISTIO_VERSION=1.1.5
  
 script:
 - >
