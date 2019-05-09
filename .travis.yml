@@ -62,6 +62,6 @@ script:
    curl -o /rpms/istio-linux.tar.gz https://github.com/istio/istio/releases/download/${ISTIO_VERSION}/istio-${ISTIO_VERSION}-linux.tar.gz"
    
 - sudo chmod -R 755 ${PWD}/rpms
-- docker build -t wise2c/yum-repo:$TRAVIS_BRANCH .
+- docker build -t wise2c/yum-repo:v1.14.1 .
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-- docker push wise2c/yum-repo:$TRAVIS_BRANCH
+- docker push wise2c/yum-repo:v1.14.1
