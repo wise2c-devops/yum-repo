@@ -33,6 +33,6 @@ yum install docker docker-python docker-compose
 
 yum install rsync python-chardet jq nfs-utils
   
-yum install kubernetes-cni kubectl-1.12.8 kubelet-1.12.8 kubeadm-1.12.8
+yum install kubernetes-cni kubectl kubelet kubeadm
 
 yum install ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror
