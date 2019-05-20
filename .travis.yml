@@ -10,11 +10,11 @@ before_install:
 
 env:
  global:
-   - HELM_VERSION=2.13.1
+   - HELM_VERSION=2.14.0
    - CEPH_VERSION=nautilus
    - KUBE_VERSION=1.13.6
    - DOCKER_VERSION=18.06.3.ce-3
-   - ISTIO_VERSION=1.1.5
+   - ISTIO_VERSION=1.1.7
  
 script:
 - >
