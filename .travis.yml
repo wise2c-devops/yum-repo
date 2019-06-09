@@ -10,11 +10,8 @@ before_install:
 
 env:
  global:
-   - HELM_VERSION=2.14.0
    - CEPH_VERSION=nautilus
    - KUBE_VERSION=1.12.9
-   - DOCKER_VERSION=18.06.3.ce-3
-   - ISTIO_VERSION=1.1.7
  
 script:
 - >
@@ -56,9 +53,7 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms/centos76 kubernetes-cni kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
    yum install -y createrepo &&
    yum clean all &&
-   createrepo /rpms &&
-   curl -o /rpms/helm-linux-amd64.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz &&
-   curl -o /rpms/istio-linux.tar.gz https://github.com/istio/istio/releases/download/${ISTIO_VERSION}/istio-${ISTIO_VERSION}-linux.tar.gz"
+   createrepo /rpms"
    
 - sudo chmod -R 755 ${PWD}/rpms
 - docker build -t wise2c/yum-repo:$TRAVIS_BRANCH .
