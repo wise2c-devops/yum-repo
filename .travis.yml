@@ -50,7 +50,7 @@ script:
    yum remove -y python-chardet chrony &&
    yum -y install --downloadonly --downloaddir=/rpms/centos76 docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
    yum -y install --downloadonly --downloaddir=/rpms/centos76 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos76 ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
+   yum -y install --downloadonly --downloaddir=/rpms/centos7 6 ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
    yum -y install --downloadonly --downloaddir=/rpms/centos76 kubernetes-cni kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
    yum install -y createrepo &&
    yum clean all &&
@@ -59,4 +59,4 @@ script:
 - sudo chmod -R 755 ${PWD}/rpms
 - docker build -t wise2c/yum-repo:$TRAVIS_BRANCH .
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-- docker push wise2c/yum-repo:$TRAVIS_BRANCH
+- docker push 37705109/yum-repo:$TRAVIS_BRANCH
