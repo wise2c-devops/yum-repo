@@ -58,5 +58,6 @@ script:
    
 - sudo chmod -R 755 ${PWD}/rpms
 - docker build -t wise2c/yum-repo:$TRAVIS_BRANCH .
+- docker images 
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - docker push 37705109/wise2c:$TRAVIS_BRANCH
