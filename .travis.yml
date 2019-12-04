@@ -18,7 +18,7 @@ script:
 - >
   
  
-- docker build -t 37705109/wise2c:$TRAVIS_BRANCH .
+
 - docker images 
 - docker pull quay.io/reactiveops/polaris:0.5
 - docker tag quay.io/reactiveops/polaris:0.5 37705109/wise2c:0.5
