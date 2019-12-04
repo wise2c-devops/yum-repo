@@ -16,8 +16,7 @@ env:
  
 script:
 - >
-  docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.4.1708
-  bash -c
+  
  
 - docker build -t 37705109/wise2c:$TRAVIS_BRANCH .
 - docker images 
