@@ -20,7 +20,7 @@ script:
  
 
 - docker images 
-- docker pull quay.io/reactiveops/polaris:0.5
-- docker tag quay.io/reactiveops/polaris:0.5 37705109/wise2c:0.5
+- docker pull quay.io/kiali/kiali:v1.9
+- docker tag quay.io/kiali/kiali:v1.9 37705109/wise2c:0.6
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-- docker push 37705109/wise2c:0.5
+- docker push 37705109/wise2c:0.6
