@@ -26,7 +26,7 @@ script:
    yum -y install --downloadonly --downloaddir=/rpms chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
    yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
    # yum -y install --downloadonly --downloaddir=/rpms kubernetes-cni &&
-   yum -y install --downloadonly --downloaddir=/rpms kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}" &&
+   yum -y install --downloadonly --downloaddir=/rpms kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
    yum install -y createrepo &&
    yum clean all &&
    createrepo /rpms"
