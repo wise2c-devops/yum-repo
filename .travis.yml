@@ -20,7 +20,7 @@ script:
  
 
 - docker images 
-- docker pull jumpserver/jms_koko:latest
-- docker tag jumpserver/jms_koko:latest 37705109/jms_koko:2.0.0
+- docker pull jumpserver/jms_koko:2.0.0
+- docker tag jumpserver/jms_koko:2.0.0 37705109/jms_koko:2.0.0
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - docker push 37705109/jms_koko:2.0.0
