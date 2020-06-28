@@ -4,61 +4,33 @@ services:
 - docker
 
 before_install:
-- docker pull centos:7.8.2003
-- docker pull centos:7.6.1810
 - docker pull centos:7.5.1804
 
 env:
  global:
    - CEPH_VERSION=octopus
-   - KUBE_VERSION=1.17.7
+   - KUBE_VERSION=1.17.8
    - DOCKER_VERSION=19.03.9-3
  
 script:
 - >
-  docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.8.2003
-  bash -c
-  "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
-   yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
-   yum install -y yum-utils &&
-   yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
-   mkdir -p /rpms/centos78 &&
-   yum remove -y python-chardet chrony &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos78 docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos78 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos78 ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
-   # yum -y install --downloadonly --downloaddir=/rpms/centos78 kubernetes-cni &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos78 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
-  docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.6.1810
-  bash -c
-  "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
-   yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
-   yum install -y yum-utils &&
-   yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
-   mkdir -p /rpms/centos76 &&
-   yum remove -y python-chardet chrony &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos76 docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos76 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos76 ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
-   # yum -y install --downloadonly --downloaddir=/rpms/centos76 kubernetes-cni &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos76 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
   docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804
   bash -c
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
    yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
    yum install -y yum-utils &&
    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
-   mkdir -p /rpms/centos75 &&
+   mkdir -p /rpms &&
    yum remove -y python-chardet chrony &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos75 docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos75 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos75 ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
-   # yum -y install --downloadonly --downloaddir=/rpms/centos75 kubernetes-cni &&
-   yum -y install --downloadonly --downloaddir=/rpms/centos75 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
+   yum -y install --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
+   yum -y install --downloadonly --downloaddir=/rpms chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
+   yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils &&
+   # yum -y install --downloadonly --downloaddir=/rpms kubernetes-cni &&
+   yum -y install --downloadonly --downloaddir=/rpms kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
    yum install -y createrepo &&
    yum clean all &&
    createrepo /rpms"
-   
+
 - sudo chmod -R 755 ${PWD}/rpms
 - docker build -t wise2c/yum-repo:$TRAVIS_BRANCH .
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
