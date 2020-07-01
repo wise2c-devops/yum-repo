@@ -20,7 +20,7 @@ script:
  
 
 - docker images 
-- docker pull jumpserver/jms_koko:2.0.0
-- docker tag jumpserver/jms_koko:2.0.0 37705109/jms_koko:2.0.0
+- docker pull dpage/pgadmin4:latest
+- docker tag dpage/pgadmin4:latest registry.cn-hangzhou.aliyuncs.com/37705109/pgadmin:v1
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-- docker push 37705109/jms_koko:2.0.0
+- docker push registry.cn-hangzhou.aliyuncs.com/37705109/pgadmin:v1
