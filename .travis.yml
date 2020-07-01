@@ -22,5 +22,5 @@ script:
 - docker images 
 - docker pull dpage/pgadmin4:latest
 - docker tag dpage/pgadmin4:latest registry.cn-hangzhou.aliyuncs.com/37705109/pgadmin:v1
-- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD registry.cn-hangzhou.aliyuncs.com
 - docker push registry.cn-hangzhou.aliyuncs.com/37705109/pgadmin:v1
