@@ -9,7 +9,7 @@ before_install:
 env:
  global:
    - CEPH_VERSION=octopus
-   - KUBE_VERSION=1.17.11
+   - KUBE_VERSION=1.17.12
    - DOCKER_VERSION=19.03.9-3
  
 script:
