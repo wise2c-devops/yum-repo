@@ -1,0 +1,31 @@
+build_image:
+  image: docker:git
+  services:
+    - docker:dind
+  variables:
+    CEPH_VERSION: 'octopus'
+    KUBE_VERSION: '1.20.0'
+    DOCKER_VERSION: '19.03.13-3'
+  script:
+    - >
+      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804
+      bash -c
+      "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
+       yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
+       yum install -y yum-utils &&
+       yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
+       mkdir -p /rpms &&
+       yum remove -y python-chardet chrony &&
+       yum -y install --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
+       yum -y install --downloadonly --downloaddir=/rpms chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
+       yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
+       yum -y install --downloadonly --downloaddir=/rpms kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
+       yum install -y createrepo &&
+       yum clean all &&
+       createrepo /rpms"
+
+    - chmod -R 755 ${PWD}/rpms
+    - docker build -t wise2c/yum-repo:$CI_COMMIT_REF_NAME .
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - docker push wise2c/yum-repo:$CI_COMMIT_REF_NAME
+  when: always
