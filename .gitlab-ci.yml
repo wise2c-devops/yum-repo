@@ -10,7 +10,7 @@ build_image:
     - >
       docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804
       bash -c
-      "docker info && yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
+      "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
        yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
        yum install -y yum-utils &&
        yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
@@ -26,6 +26,7 @@ build_image:
 
     - echo '################## Debug Start ####################'
     - ls ${PWD}/rpms
+    - ls ${PWD}/rpms |grep kube
     - echo '################## Debug End ####################'
     - chmod -R 755 ${PWD}/rpms
     - docker build -t wise2c/yum-repo:$CI_COMMIT_REF_NAME .
