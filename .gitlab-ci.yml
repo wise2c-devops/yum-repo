@@ -24,10 +24,6 @@ build_image:
        yum clean all &&
        createrepo /rpms"
 
-    - echo 'Debug Start'
-    - ls ${PWD}/rpms
-    - ls ${PWD}/rpms |grep kube
-    - echo 'Debug End'
     - chmod -R 755 ${PWD}/rpms
     - docker build -t wise2c/yum-repo:$CI_COMMIT_REF_NAME .
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
