@@ -4,7 +4,7 @@ build_image:
     - docker:dind
   variables:
     CEPH_VERSION: 'octopus'
-    KUBE_VERSION: '1.19.7'
+    KUBE_VERSION: '1.19.8'
     DOCKER_VERSION: '19.03.13-3'
   script:
     - >
