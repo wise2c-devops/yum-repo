@@ -20,7 +20,7 @@ script:
  
 
 - docker images 
-- docker pull dpage/pgadmin4:latest
-- docker tag dpage/pgadmin4:latest registry.cn-hangzhou.aliyuncs.com/37705109/pgadmin:v1
+- docker pull k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.0.1
+- docker tag k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.0.1 registry.cn-hangzhou.aliyuncs.com/37705109/pgadmin:v1
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD registry.cn-hangzhou.aliyuncs.com
 - docker push registry.cn-hangzhou.aliyuncs.com/37705109/pgadmin:v1
