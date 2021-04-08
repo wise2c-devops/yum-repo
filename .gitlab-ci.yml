@@ -4,8 +4,8 @@ build_image:
     - docker:dind
   variables:
     CEPH_VERSION: 'octopus'
-    KUBE_VERSION: '1.19.8'
-    DOCKER_VERSION: '19.03.13-3'
+    KUBE_VERSION: '1.19.9'
+    DOCKER_VERSION: '19.03.15-3'
   script:
     - >
       docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804
