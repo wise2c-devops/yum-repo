@@ -3,20 +3,20 @@ build_image:
   services:
     - docker:dind
   variables:
-    CEPH_VERSION: 'octopus'
-    KUBE_VERSION: '1.18.17'
+    CEPH_VERSION: '16.2.1'
+    KUBE_VERSION: '1.18.18'
     DOCKER_VERSION: '19.03.15-3'
   script:
     - >
-      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804
+      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo almalinux/almalinux:8
       bash -c
-      "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
-       yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
+      "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm &&
+       yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm &&
        yum install -y yum-utils &&
        yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
        mkdir -p /rpms &&
        yum remove -y python-chardet chrony &&
-       yum -y install --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
+       yum -y install --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el8.x86_64 docker-ce-cli-${DOCKER_VERSION}.el8.x86_64 docker-python docker-compose python-chardet python-requests &&
        yum -y install --downloadonly --downloaddir=/rpms chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
        yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
        yum -y install --downloadonly --downloaddir=/rpms kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
