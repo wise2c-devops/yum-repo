@@ -4,7 +4,7 @@ build_image:
     - docker:dind
   variables:
     CEPH_VERSION: '15.2.9'
-    KUBE_VERSION: '1.21.0'
+    KUBE_VERSION: '1.21.1'
     CONTAINERD_VERSION: '1.4.6-3.1'
   script:
     - >
