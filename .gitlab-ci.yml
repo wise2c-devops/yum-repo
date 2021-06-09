@@ -5,6 +5,7 @@ build_image:
   variables:
     CEPH_VERSION: '15.2.9'
     KUBE_VERSION: '1.21.1'
+    DOCKER_VERSION: '19.03.15-3'
     CONTAINERD_VERSION: '1.4.6-3.1'
   script:
     - >
@@ -16,7 +17,7 @@ build_image:
        yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
        mkdir -p /rpms &&
        yum remove -y python-chardet chrony &&
-       yum -y install --downloadonly --downloaddir=/rpms containerd.io-${CONTAINERD_VERSION}.el7.x86_64 _64 python-chardet python-requests &&
+       yum -y install --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 containerd.io-${CONTAINERD_VERSION}.el7.x86_64 _64 docker-python docker-compose python-chardet python-requests &&
        yum -y install --downloadonly --downloaddir=/rpms chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
        yum -y install --downloadonly --downloaddir=/rpms ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils && 
        yum -y install --downloadonly --downloaddir=/rpms kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
