@@ -25,7 +25,7 @@ gpgcheck=0
 
 [wise2c-crio]
 
-name=wise2c-k8s
+name=wise2c-crio
 
 baseurl=http://repo-server-ip:2009/rpms/crio
 
