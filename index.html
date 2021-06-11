@@ -37,9 +37,15 @@ Commercial support is available at
   var comment = "###############################################";
   document.write(comment.fontcolor("Red"));
   document.write("<pm><em></em></p>");
-  document.write("[wise2c]"+"<br>");
-  document.write("name=wise2c"+"<br>");
-  document.write("baseurl=http://"+(ip)+"/rpms"+"<br>");
+  document.write("[wise2c-k8s]"+"<br>");
+  document.write("name=wise2c-k8s"+"<br>");
+  document.write("baseurl=http://"+(ip)+"/rpms/k8s"+"<br>");
+  document.write("enabled=1"+"<br>");
+  document.write("gpgcheck=0"+"<br>");
+  document.write("<pm><em></em></p>");
+  document.write("[wise2c-crio]"+"<br>");
+  document.write("name=wise2c-crio"+"<br>");
+  document.write("baseurl=http://"+(ip)+"/rpms/crio"+"<br>");
   document.write("enabled=1"+"<br>");
   document.write("gpgcheck=0"+"<br>");
   document.write("<pm><em></em></p>");
