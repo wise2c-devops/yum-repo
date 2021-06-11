@@ -5,7 +5,7 @@ Wise2C Yum Repo for Docker/K8S/Ceph/NFS installation
 
 YUM Repo服务器安装好docker，直接运行命令：
 
-docker run -d -p 2009:2009 --name=yum-repo wise2c/yum-repo:v1.21.0
+docker run -d -p 2009:2009 --name=yum-repo wise2c/yum-repo:v1.21.1
 
 在需要安装docker/k8s/ceph/nfs的其它主机上：
 
@@ -13,11 +13,21 @@ docker run -d -p 2009:2009 --name=yum-repo wise2c/yum-repo:v1.21.0
 
 ###############################################
 
-[wise2c]
+[wise2c-k8s]
 
-name=wise2c
+name=wise2c-k8s
 
-baseurl=http://repo-server-ip:2009/rpms
+baseurl=http://repo-server-ip:2009/rpms/k8s
+
+enabled=1
+
+gpgcheck=0
+
+[wise2c-crio]
+
+name=wise2c-k8s
+
+baseurl=http://repo-server-ip:2009/rpms/crio
 
 enabled=1
 
@@ -29,10 +39,12 @@ gpgcheck=0
 
 然后就可以直接用yum install命令命令安装相关软件了。例如：
 
-yum install docker docker-python docker-compose
+yum --disablerepo=* --enablerepo=wise2c-k8s install docker docker-python docker-compose
 
-yum install rsync python-chardet jq nfs-utils
+yum --disablerepo=* --enablerepo=wise2c-k8s install rsync python-chardet jq nfs-utils
   
-yum install kubernetes-cni kubectl kubelet kubeadm
+yum --disablerepo=* --enablerepo=wise2c-k8s install kubernetes-cni kubectl kubelet kubeadm
 
-yum install ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror
+yum --disablerepo=* --enablerepo=wise2c-k8s install ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror
+
+yum --disablerepo=* --enablerepo=wise2c-crio install crio podman
