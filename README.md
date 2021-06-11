@@ -39,7 +39,7 @@ gpgcheck=0
 
 然后就可以直接用yum install命令命令安装相关软件了。例如：
 
-yum --disablerepo=* --enablerepo=wise2c-k8s install docker docker-python docker-compose
+yum --disablerepo=* --enablerepo=wise2c-k8s install docker-ce docker-ce-cli docker-python docker-compose
 
 yum --disablerepo=* --enablerepo=wise2c-k8s install rsync python-chardet jq nfs-utils
   
