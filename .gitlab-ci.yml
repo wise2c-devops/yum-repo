@@ -37,8 +37,10 @@ build_image:
       "yum -y install --downloadonly --downloaddir=/rpms/crio podman cri-o
        yum install -y createrepo &&
        yum clean all &&
+       ls /rpms/k8s
        createrepo /rpms/crio &&
-       ls /rpm/k8s"
+       echo hellohellohellohellohellohellohellohellohellohellohello
+       ls /rpms/k8s"
     - chmod -R 755 ${PWD}/rpms
     - docker build -t wise2c/yum-repo:$CI_COMMIT_REF_NAME .
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
