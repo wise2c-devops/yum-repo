@@ -25,7 +25,7 @@ build_image:
        yum -y install --downloadonly --downloaddir=/rpms/k8s docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils &&
-       yum -y install --downloadonly --downloaddir=/rpms/k8s kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni &&
        yum install -y createrepo &&
        yum clean all &&
        createrepo /rpms/k8s"
