@@ -4,7 +4,7 @@ build_image:
     - docker:dind
   variables:
     CEPH_VERSION: '15.2.9'
-    KUBE_VERSION: '1.18.20'
+    KUBE_VERSION: '1.18.19'
     DOCKER_VERSION: '19.03.15-3'
     CRIO_MAJOR_VERSION: '1.18'
     CRIO_VERSION: '1.18.4'
@@ -28,19 +28,14 @@ build_image:
        yum -y install --downloadonly --downloaddir=/rpms/k8s kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni &&
        yum install -y createrepo &&
        yum clean all &&
-       ls /rpms/k8s &&
-       createrepo /rpms/k8s &&
-       ls /rpms/k8s"
+       createrepo /rpms/k8s"
     - >
       docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo centos:7.5.1804
       bash -c
       "yum -y install --downloadonly --downloaddir=/rpms/crio podman cri-o
        yum install -y createrepo &&
        yum clean all &&
-       ls /rpms/k8s
-       createrepo /rpms/crio &&
-       echo hellohellohellohellohellohellohellohellohellohellohello
-       ls /rpms/k8s"
+       createrepo /rpms/crio"
     - chmod -R 755 ${PWD}/rpms
     - docker build -t wise2c/yum-repo:$CI_COMMIT_REF_NAME .
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
