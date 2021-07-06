@@ -5,13 +5,15 @@ build_image:
   variables:
     CEPH_VERSION: '15.2.9'
     KUBE_VERSION: '1.19.12'
-    DOCKER_VERSION: '19.03.15-3'
+    DOCKER_VERSION: '20.10.7-3'
     CRIO_MAJOR_VERSION: '1.19'
     CRIO_VERSION: '1.19.2'
   script:
     - apk add curl
-    - curl -L -o ${PWD}/devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
-    - curl -L -o ${PWD}/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}:/${CRIO_VERSION}/CentOS_7/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}:${CRIO_VERSION}.repo
+    - curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
+    - curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_7/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
+    - curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8/devel:kubic:libcontainers:stable.repo
+    - curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
     - >
       docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804
       bash -c
@@ -19,22 +21,37 @@ build_image:
        yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el7/noarch/ceph-release-1-1.el7.noarch.rpm &&
        yum install -y yum-utils &&
        yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
-       mkdir -p /rpms/k8s &&
-       mkdir -p /rpms/crio &&
+       mkdir -p /rpms/k8s/centos7 &&
        yum remove -y python-chardet chrony &&
-       yum -y install --downloadonly --downloaddir=/rpms/k8s docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
-       yum -y install --downloadonly --downloaddir=/rpms/k8s chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
-       yum -y install --downloadonly --downloaddir=/rpms/k8s ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils &&
-       yum -y install --downloadonly --downloaddir=/rpms/k8s kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni &&
-       yum install -y createrepo &&
-       yum clean all &&
-       createrepo /rpms/k8s"
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos7 docker-ce-${DOCKER_VERSION}.el7 docker-ce-cli-${DOCKER_VERSION}.el7 docker-python docker-compose python-chardet python-requests &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos7 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos7 ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos7 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni"
     - >
-      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo centos:7.5.1804
+      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos7-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos7-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo centos:7.5.1804
       bash -c
-      "yum -y install --downloadonly --downloaddir=/rpms/crio podman cri-o
+      "mkdir -p /rpms/crio/centos7 &&
+       yum -y install --downloadonly --downloaddir=/rpms/crio/centos7 podman cri-o"
+    - >
+      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo almalinux:8.4
+      bash -c
+      "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm &&
+       yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm &&
+       yum install -y yum-utils &&
+       yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
+       mkdir -p /rpms/k8s/centos8 &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
+    - >
+      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:8.4
+      bash -c
+      "mkdir -p /rpms/crio/centos8 &&
        yum install -y createrepo &&
+       yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o &&
        yum clean all &&
+       createrepo /rpms/k8s &&
        createrepo /rpms/crio"
     - chmod -R 755 ${PWD}/rpms
     - docker build -t wise2c/yum-repo:$CI_COMMIT_REF_NAME .
