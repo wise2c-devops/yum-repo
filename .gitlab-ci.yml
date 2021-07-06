@@ -5,7 +5,7 @@ build_image:
   variables:
     CEPH_VERSION: '15.2.9'
     KUBE_VERSION: '1.21.2'
-    DOCKER_VERSION: '3:20.10.7-3'
+    DOCKER_VERSION: '20.10.7-3'
     CRIO_MAJOR_VERSION: '1.21'
     CRIO_VERSION: '1.21.1'
   script:
@@ -24,7 +24,7 @@ build_image:
        mkdir -p /rpms/k8s/centos7 &&
        mkdir -p /rpms/crio/centos7 &&
        yum remove -y python-chardet chrony &&
-       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos7 docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-python docker-compose python-chardet python-requests &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos7 docker-ce-${DOCKER_VERSION}.el7 docker-ce-cli-${DOCKER_VERSION}.el7 docker-python docker-compose python-chardet python-requests &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos7 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos7 ceph-deploy ceph ceph-radosgw radosgw-agent rbd-nbd rbd-mirror open-vm-tools nfs-utils &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos7 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni &&
@@ -47,10 +47,10 @@ build_image:
        yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
        mkdir -p /rpms/k8s/centos8 &&
        mkdir -p /rpms/crio/centos8 &&
-       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 docker-ce-${DOCKER_VERSION}.el8.x86_64 docker-ce-cli &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils &&
-       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} &&
        yum install -y createrepo &&
        yum clean all &&
        createrepo /rpms/k8s/centos8"
