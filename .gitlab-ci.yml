@@ -7,7 +7,7 @@ build_image:
     KUBE_VERSION: '1.22.0'
     DOCKER_VERSION: '19.03.15-3'
     CRIO_MAJOR_VERSION: '1.21'
-    CRIO_VERSION: '1.21.2'
+    CRIO_VERSION: '1.21.1'
   script:
     - apk add curl
     - curl -L -o ${PWD}/devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
