@@ -7,7 +7,7 @@ build_image:
     KUBE_VERSION: '1.22.0'
     DOCKER_VERSION: '19.03.15-3'
     CRIO_MAJOR_VERSION: '1.21'
-    CRIO_VERSION: '1.21.1'
+    CRIO_VERSION: '1.21.2'
   script:
     - apk add curl
     - curl -L -o ${PWD}/devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
@@ -32,7 +32,7 @@ build_image:
     - >
       docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo centos:7.5.1804
       bash -c
-      "yum -y install --downloadonly --downloaddir=/rpms/crio podman cri-o-${CRIO_VERSION}
+      "yum -y install --downloadonly --downloaddir=/rpms/crio podman cri-o
        yum install -y createrepo &&
        yum clean all &&
        createrepo /rpms/crio"
