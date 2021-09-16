@@ -34,7 +34,7 @@ build_image:
       bash -c
       "yum -y install --downloadonly --downloaddir=/rpms/crio podman cri-o &&
        rm -f /rpms/crio/containers-common-1-18.el7.20.1.noarch.rpm &&
-       curl -L -o /rpms/crio/containers-common-1-18.el7.20.1.noarch.rpm https://github.com/wise2c-devops/yum-repo/raw/master/containers-common-1-17.el7.17.1.noarch.rpm &&
+       curl -L -o /rpms/crio/containers-common-1-18.el7.21.1.noarch.rpm https://github.com/wise2c-devops/yum-repo/raw/master/containers-common-1-17.el7.17.1.noarch.rpm &&
        yum install -y createrepo &&
        yum clean all &&
        createrepo /rpms/crio"
