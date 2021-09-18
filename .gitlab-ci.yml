@@ -33,7 +33,7 @@ build_image:
       "mkdir -p /rpms/crio/centos7 &&
        yum -y install --downloadonly --downloaddir=/rpms/crio/centos7 podman cri-o &&
        rm -f /rpms/crio/containers-common-1-18.el7.20.1.noarch.rpm &&
-       curl -L -o /rpms/crio/containers-common-1-18.el7.21.1.noarch.rpm https://github.com/wise2c-devops/yum-repo/raw/master/containers-common-1-17.el7.17.1.noarch.rpm"
+       curl -L -o /rpms/crio/centos7/containers-common-1-18.el7.21.1.noarch.rpm https://github.com/wise2c-devops/yum-repo/raw/master/containers-common-1-17.el7.17.1.noarch.rpm"
     - >
       docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo almalinux:8.4
       bash -c
@@ -51,7 +51,7 @@ build_image:
       bash -c
       "mkdir -p /rpms/crio/centos8 &&
        yum install -y createrepo &&
-       yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o &&
+       yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o checkpolicy conmon container-selinux containernetworking-plugins containers-common criu fuse-common fuse3 fuse3-libs libnet libselinux-utils libslirp policycoreutils policycoreutils-python-utils protobuf-c python3-audit python3-libselinux python3-libsemanage python3-policycoreutils python3-setools rpm-plugin-selinux runc selinux-policy selinux-policy-targeted socat fuse-overlayfs slirp4netns &&
        yum clean all &&
        createrepo /rpms/k8s/centos7 &&
        createrepo /rpms/k8s/centos8 &&
