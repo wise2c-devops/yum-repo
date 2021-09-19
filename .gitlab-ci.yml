@@ -35,7 +35,7 @@ build_image:
        rm -f /rpms/crio/containers-common-1-18.el7.20.1.noarch.rpm &&
        curl -L -o /rpms/crio/centos7/containers-common-1-18.el7.21.1.noarch.rpm https://github.com/wise2c-devops/yum-repo/raw/master/containers-common-1-17.el7.17.1.noarch.rpm"
     - >
-      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo almalinux:8.4
+      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux/rockylinux:8.4
       bash -c
       "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm &&
        yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm &&
@@ -47,7 +47,7 @@ build_image:
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
     - >
-      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:8.4
+      docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo rockylinux/rockylinux:8.4
       bash -c
       "mkdir -p /rpms/crio/centos8 &&
        yum install -y createrepo &&
