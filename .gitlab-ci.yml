@@ -50,8 +50,8 @@ build_image:
       docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:8.4
       bash -c
       "mkdir -p /rpms/crio/centos8 &&
-       yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o &&
        yum install -y createrepo &&
+       yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o &&
        yum clean all &&
        createrepo /rpms/k8s/centos7 &&
        createrepo /rpms/k8s/centos8 &&
