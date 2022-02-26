@@ -11,9 +11,9 @@ build_image:
   script:
     - apk add curl
     - curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
-    - curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}:/${CRIO_VERSION}/CentOS_7/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
+    - curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}:/${CRIO_VERSION}/CentOS_7/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}:${CRIO_VERSION}.repo
     - curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8/devel:kubic:libcontainers:stable.repo
-    - curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}:/${CRIO_VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
+    - curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}:/${CRIO_VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}:${CRIO_VERSION}.repo
     - >
       docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804
       bash -c
