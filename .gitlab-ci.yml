@@ -47,7 +47,7 @@ build_image:
        yum install -y yum-utils &&
        yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
        mkdir -p /rpms/k8s/centos8 &&
-       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 audit-libs-python3 &&
+       yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 python3-docker python3-chardet python3-requests audit-libs-python3&&
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils &&
        yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
