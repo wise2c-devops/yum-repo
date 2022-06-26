@@ -3,8 +3,8 @@ build_image:
   services:
     - docker:dind
   variables:
-    CEPH_VERSION: '15.2.9'
-    KUBE_VERSION: '1.22.10'
+    CEPH_VERSION: '17.2.1'
+    KUBE_VERSION: '1.22.11'
     DOCKER_VERSION: '20.10.17-3'
     CRIO_MAJOR_VERSION: '1.22'
     CRIO_VERSION: '1.22.5'
