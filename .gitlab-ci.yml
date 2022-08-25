@@ -4,10 +4,10 @@ build_image:
     - docker:dind
   variables:
     CEPH_VERSION: '15.2.9'
-    KUBE_VERSION: '1.24.2'
+    KUBE_VERSION: '1.25.0'
     DOCKER_VERSION: '20.10.17-3'
     CRIO_MAJOR_VERSION: '1.24'
-    CRIO_VERSION: '1.24.1'
+    CRIO_VERSION: '1.24.2'
   script:
     - apk add curl
     - curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
