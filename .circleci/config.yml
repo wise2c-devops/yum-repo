@@ -20,7 +20,7 @@ jobs:
             mkdir -p ${PWD}/rpms/crio && docker cp podman3-centos7:/centos7 ${PWD}/rpms/crio/
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo centos:7.5.1804 bash -c \
             'yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
-             yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el7/noarch/ceph-release-1-1.el7.noarch.rpm && \
+             yum install -y https://download.ceph.com/rpm-$CEPH_VERSION/el7/noarch/ceph-release-1-1.el7.noarch.rpm && \
              yum install -y yum-utils && \
              yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
              mkdir -p /rpms/k8s/centos7 && \
