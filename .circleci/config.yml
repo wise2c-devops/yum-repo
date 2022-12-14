@@ -128,7 +128,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build an amd64 container image
+          name: Build an aarch64 container image
           command: |
             curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
             curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_7/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
@@ -187,7 +187,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build an amd64 container image
+          name: Build an aarch64 container image
           command: |
             curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
             curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_7/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
