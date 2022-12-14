@@ -235,6 +235,18 @@ jobs:
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker push wise2c/yum-repo:aarch64-$CIRCLE_TAG
 
+  build-branches-multi-arch:
+    machine: true
+    steps:
+      - run:
+          name: Build a multi-arch container image
+          command: |
+            docker manifest create wise2c/yum-repo:$CIRCLE_BRANCH wise2c/yum-repo:amd64-$CIRCLE_BRANCH wise2c/yum-repo:aarch64-$CIRCLE_BRANCH
+            docker manifest annotate wise2c/yum-repo:$CIRCLE_BRANCH wise2c/yum-repo:amd64-$CIRCLE_BRANCH --os linux --arch amd64
+            docker manifest annotate wise2c/yum-repo:$CIRCLE_BRANCH wise2c/yum-repo:aarch64-$CIRCLE_BRANCH --os linux --arch arm64
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker manifest push wise2c/yum-repo:$CIRCLE_BRANCH
+
   build-tags-multi-arch:
     machine: true
     steps:
@@ -246,6 +258,7 @@ jobs:
             docker manifest annotate wise2c/yum-repo:$CIRCLE_TAG wise2c/yum-repo:aarch64-$CIRCLE_TAG --os linux --arch arm64
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker manifest push wise2c/yum-repo:$CIRCLE_TAG
+
 workflows:
   version: 2
   build-for-branches:
