@@ -6,7 +6,7 @@ environment:
   CRIO_VERSION: 1.25.1
 
 jobs:
-  build-branches-amd64:
+  build:
     machine: true
     steps:
       - checkout
