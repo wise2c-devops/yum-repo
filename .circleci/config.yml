@@ -1,5 +1,5 @@
 jobs:
-  build-branches-amd64:
+  build:
     environment:
       CEPH_VERSION: '15.2.9'
       KUBE_VERSION: '1.25.1'
