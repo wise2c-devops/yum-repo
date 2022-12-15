@@ -125,6 +125,7 @@ jobs:
       CRIO_MAJOR_VERSION: '1.25'
       CRIO_VERSION: '1.25.1'
     machine: true
+    resource_class: arm.medium
     steps:
       - checkout
       - run:
@@ -184,6 +185,7 @@ jobs:
       CRIO_MAJOR_VERSION: '1.25'
       CRIO_VERSION: '1.25.1'
     machine: true
+    resource_class: arm.medium
     steps:
       - checkout
       - run:
