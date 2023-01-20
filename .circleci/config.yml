@@ -5,6 +5,7 @@ jobs:
       KUBE_VERSION: '1.26.1'
       DOCKER_VERSION: '20.10.18-3'
       CRIO_MAJOR_VERSION: '1.26'
+      CENTOS7_CRIO_MAJOR_VERSION: '1.25'
       CRIO_VERSION: '1.26.1'
     machine: true
     steps:
@@ -13,7 +14,7 @@ jobs:
           name: Build an amd64 container image
           command: |
             curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
-            curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_7/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
+            curl -L -o ${PWD}/centos7-devel-kubic-libcontainers-stable-cri-o-${CENTOS7_CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CENTOS7_CRIO_MAJOR_VERSION}/CentOS_7/devel:kubic:libcontainers:stable:cri-o:${CENTOS7_CRIO_MAJOR_VERSION}.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8/devel:kubic:libcontainers:stable.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
             docker run -itd --name=podman3-centos7 --entrypoint=/bin/sh wise2c/podman3:centos7
