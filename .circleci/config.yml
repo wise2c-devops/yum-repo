@@ -2,11 +2,11 @@ jobs:
   build-branches-amd64:
     environment:
       CEPH_VERSION: '15.2.9'
-      KUBE_VERSION: '1.26.3'
+      KUBE_VERSION: '1.27.0'
       DOCKER_VERSION: '23.0.1-1'
-      CRIO_MAJOR_VERSION: '1.26'
-      CENTOS7_CRIO_MAJOR_VERSION: '1.26'
-      CRIO_VERSION: '1.26.1'
+      CRIO_MAJOR_VERSION: '1.27'
+      CENTOS7_CRIO_MAJOR_VERSION: '1.27'
+      CRIO_VERSION: '1.27.0'
     machine: true
     steps:
       - checkout
@@ -62,11 +62,11 @@ jobs:
   build-tags-amd64:
     environment:
       CEPH_VERSION: '15.2.9'
-      KUBE_VERSION: '1.26.3'
+      KUBE_VERSION: '1.27.0'
       DOCKER_VERSION: '23.0.1-1'
-      CRIO_MAJOR_VERSION: '1.26'
-      CENTOS7_CRIO_MAJOR_VERSION: '1.26'
-      CRIO_VERSION: '1.26.1'
+      CRIO_MAJOR_VERSION: '1.27'
+      CENTOS7_CRIO_MAJOR_VERSION: '1.27'
+      CRIO_VERSION: '1.27.0'
     machine: true
     steps:
       - checkout
@@ -122,11 +122,11 @@ jobs:
   build-branches-aarch64:
     environment:
       CEPH_VERSION: '15.2.9'
-      KUBE_VERSION: '1.26.3'
+      KUBE_VERSION: '1.27.0'
       DOCKER_VERSION: '23.0.1-1'
-      CRIO_MAJOR_VERSION: '1.26'
-      CENTOS7_CRIO_MAJOR_VERSION: '1.26'
-      CRIO_VERSION: '1.26.1'
+      CRIO_MAJOR_VERSION: '1.27'
+      CENTOS7_CRIO_MAJOR_VERSION: '1.27'
+      CRIO_VERSION: '1.27.0'
     machine: true
     resource_class: arm.medium
     steps:
@@ -161,11 +161,11 @@ jobs:
   build-tags-aarch64:
     environment:
       CEPH_VERSION: '15.2.9'
-      KUBE_VERSION: '1.26.3'
+      KUBE_VERSION: '1.27.0'
       DOCKER_VERSION: '23.0.1-1'
-      CRIO_MAJOR_VERSION: '1.26'
-      CENTOS7_CRIO_MAJOR_VERSION: '1.26'
-      CRIO_VERSION: '1.26.1'
+      CRIO_MAJOR_VERSION: '1.27'
+      CENTOS7_CRIO_MAJOR_VERSION: '1.27'
+      CRIO_VERSION: '1.27.0'
     machine: true
     resource_class: arm.medium
     steps:
