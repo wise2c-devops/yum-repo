@@ -5,7 +5,7 @@ jobs:
       KUBE_VERSION: '1.25.13'
       DOCKER_VERSION: '23.0.1-1'
       CRIO_MAJOR_VERSION: '1.25'
-      CRIO_VERSION: '1.25.3'
+      CRIO_VERSION: '1.25.4'
     machine: true
     steps:
       - checkout
@@ -64,7 +64,7 @@ jobs:
       KUBE_VERSION: '1.25.13'
       DOCKER_VERSION: '23.0.1-1'
       CRIO_MAJOR_VERSION: '1.25'
-      CRIO_VERSION: '1.25.3'
+      CRIO_VERSION: '1.25.4'
     machine: true
     steps:
       - checkout
@@ -123,7 +123,7 @@ jobs:
       KUBE_VERSION: '1.25.13'
       DOCKER_VERSION: '23.0.1-1'
       CRIO_MAJOR_VERSION: '1.25'
-      CRIO_VERSION: '1.25.3'
+      CRIO_VERSION: '1.25.4'
     machine: true
     resource_class: arm.medium
     steps:
@@ -161,7 +161,7 @@ jobs:
       KUBE_VERSION: '1.25.13'
       DOCKER_VERSION: '23.0.1-1'
       CRIO_MAJOR_VERSION: '1.25'
-      CRIO_VERSION: '1.25.3'
+      CRIO_VERSION: '1.25.4'
     machine: true
     resource_class: arm.medium
     steps:
