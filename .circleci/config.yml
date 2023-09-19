@@ -4,9 +4,9 @@ jobs:
       CEPH_VERSION: '15.2.9'
       KUBE_VERSION: '1.28.0'
       DOCKER_VERSION: '23.0.1-1'
-      CRIO_MAJOR_VERSION: '1.27'
-      CENTOS7_CRIO_MAJOR_VERSION: '1.27'
-      CRIO_VERSION: '1.27.0'
+      CRIO_MAJOR_VERSION: '1.28'
+      CENTOS7_CRIO_MAJOR_VERSION: '1.28'
+      CRIO_VERSION: '1.28.0'
     machine: true
     steps:
       - checkout
@@ -64,9 +64,9 @@ jobs:
       CEPH_VERSION: '15.2.9'
       KUBE_VERSION: '1.28.0'
       DOCKER_VERSION: '23.0.1-1'
-      CRIO_MAJOR_VERSION: '1.27'
-      CENTOS7_CRIO_MAJOR_VERSION: '1.27'
-      CRIO_VERSION: '1.27.0'
+      CRIO_MAJOR_VERSION: '1.28'
+      CENTOS7_CRIO_MAJOR_VERSION: '1.28'
+      CRIO_VERSION: '1.28.0'
     machine: true
     steps:
       - checkout
@@ -124,9 +124,9 @@ jobs:
       CEPH_VERSION: '15.2.9'
       KUBE_VERSION: '1.28.0'
       DOCKER_VERSION: '23.0.1-1'
-      CRIO_MAJOR_VERSION: '1.27'
-      CENTOS7_CRIO_MAJOR_VERSION: '1.27'
-      CRIO_VERSION: '1.27.0'
+      CRIO_MAJOR_VERSION: '1.28'
+      CENTOS7_CRIO_MAJOR_VERSION: '1.28'
+      CRIO_VERSION: '1.28.0'
     machine: true
     resource_class: arm.medium
     steps:
@@ -163,9 +163,9 @@ jobs:
       CEPH_VERSION: '15.2.9'
       KUBE_VERSION: '1.28.0'
       DOCKER_VERSION: '23.0.1-1'
-      CRIO_MAJOR_VERSION: '1.27'
-      CENTOS7_CRIO_MAJOR_VERSION: '1.27'
-      CRIO_VERSION: '1.27.0'
+      CRIO_MAJOR_VERSION: '1.28'
+      CENTOS7_CRIO_MAJOR_VERSION: '1.28'
+      CRIO_VERSION: '1.28.0'
     machine: true
     resource_class: arm.medium
     steps:
