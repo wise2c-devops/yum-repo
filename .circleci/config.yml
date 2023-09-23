@@ -2,7 +2,7 @@ jobs:
   build-branches-amd64:
     environment:
       CEPH_VERSION: '18.2.0'
-      KUBE_VERSION: '1.25.14'
+      KUBE_VERSION: '1.25.13'
       DOCKER_VERSION: '24.0.6-1'
       CRIO_MAJOR_VERSION: '1.25'
       CRIO_VERSION: '1.25.4'
