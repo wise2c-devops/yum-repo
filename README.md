@@ -17,7 +17,7 @@ docker run -d -p 2009:2009 --name=yum-repo wise2c/yum-repo:v1.25.14
 
 name=wise2c-k8s
 
-baseurl=http://repo-server-ip:2009/rpms/k8s/centos8
+baseurl=http://repo-server-ip:2009/rpms/k8s/centos9
 
 enabled=1
 
@@ -27,7 +27,7 @@ gpgcheck=0
 
 name=wise2c-crio
 
-baseurl=http://repo-server-ip:2009/rpms/crio/centos8
+baseurl=http://repo-server-ip:2009/rpms/crio/centos9
 
 enabled=1
 
@@ -35,7 +35,7 @@ gpgcheck=0
 
 ###############################################
 
-上面的 repo-server-ip 请写为上述服务器的真实IP地址，如果是7.x（RHEL/CentOS）的操作系统，请留意将其修改为centos7。
+上面的 repo-server-ip 请写为上述服务器的真实IP地址，如果是8.x（RHEL/CentOS/AlmaLinux/RockyLinux/OracleLinux）的操作系统，请留意将其修改为centos8。
 
 然后就可以直接用yum install命令命令安装相关软件了。例如：
 
