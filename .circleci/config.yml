@@ -1,0 +1,219 @@
+jobs:
+  build-branches-amd64:
+    environment:
+      KUBE_VERSION: '1.19.16'
+      DOCKER_VERSION: '24.0.6-1'
+      CRIO_MAJOR_VERSION: '1.19'
+      CRIO_VERSION: '1.19.2'
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build an amd64 container image
+          command: |
+            curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8/devel:kubic:libcontainers:stable.repo
+            curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-amd64.repo:/etc/yum.repos.d/kubernetes.repo alanpeng/kylinos:v10-sp2 bash -c \
+              "yum install -y createrepo && \
+               mkdir -p /rpms/k8s/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
+               curl -L -o /rpms/k8s/centos8/kubernetes-cni-0.8.7-0.x86_64.rpm https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/Packages/db7cb5cb0b3f6875f54d10f02e625573988e3e91fd4fc5eef0b1876bb18604ad-kubernetes-cni-0.8.7-0.x86_64.rpm"
+            docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
+            docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
+            docker stop kylin-yumrepo && docker rm kylin-yumrepo
+            tar zxf ${PWD}/yum-install-cache.tar.gz
+            sudo mkdir -p ${PWD}/rpms/crio/centos8
+            sudo cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
+            sudo rm -rf ${PWD}/yum-install-cache
+            docker run -t --rm -v ${PWD}/rpms:/rpms alanpeng/kylinos:v10-sp2 bash -c \
+              "yum install -y createrepo && \
+               yum clean all && \
+               createrepo /rpms/k8s/centos8 && \
+               createrepo /rpms/crio/centos8"
+            sudo chmod -R 755 ${PWD}/rpms
+            docker build -t wise2c/yum-repo:amd64-$CIRCLE_BRANCH .
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker push wise2c/yum-repo:amd64-$CIRCLE_BRANCH
+
+  build-tags-amd64:
+    environment:
+      KUBE_VERSION: '1.19.16'
+      DOCKER_VERSION: '24.0.6-1'
+      CRIO_MAJOR_VERSION: '1.19'
+      CRIO_VERSION: '1.19.2'
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build an amd64 container image
+          command: |
+            curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8/devel:kubic:libcontainers:stable.repo
+            curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-amd64.repo:/etc/yum.repos.d/kubernetes.repo alanpeng/kylinos:v10-sp2 bash -c \
+              "yum install -y createrepo && \
+               mkdir -p /rpms/k8s/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
+               curl -L -o /rpms/k8s/centos8/kubernetes-cni-0.8.7-0.x86_64.rpm https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/Packages/db7cb5cb0b3f6875f54d10f02e625573988e3e91fd4fc5eef0b1876bb18604ad-kubernetes-cni-0.8.7-0.x86_64.rpm"
+            docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
+            docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
+            docker stop kylin-yumrepo && docker rm kylin-yumrepo
+            tar zxf ${PWD}/yum-install-cache.tar.gz
+            sudo mkdir -p ${PWD}/rpms/crio/centos8
+            sudo cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
+            sudo rm -rf ${PWD}/yum-install-cache
+            docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
+            docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
+            docker stop kylin-yumrepo && docker rm kylin-yumrepo
+            tar zxf ${PWD}/yum-install-cache.tar.gz
+            sudo kdir -p ${PWD}/rpms/crio/centos8
+            cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
+            rm -rf ${PWD}/yum-install-cache
+            docker run -t --rm -v ${PWD}/rpms:/rpms alanpeng/kylinos:v10-sp2 bash -c \
+              "yum install -y createrepo && \
+               yum clean all && \
+               createrepo /rpms/k8s/centos8 && \
+               createrepo /rpms/crio/centos8"
+            sudo chmod -R 755 ${PWD}/rpms
+            docker build -t wise2c/yum-repo:amd64-$CIRCLE_TAG .
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker push wise2c/yum-repo:amd64-$CIRCLE_TAG
+
+  build-branches-aarch64:
+    environment:
+      KUBE_VERSION: '1.19.16'
+      DOCKER_VERSION: '24.0.6-1'
+      CRIO_MAJOR_VERSION: '1.19'
+      CRIO_VERSION: '1.19.2'
+    machine: true
+    resource_class: arm.medium
+    steps:
+      - checkout
+      - run:
+          name: Build an aarch64 container image
+          command: |
+            curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8/devel:kubic:libcontainers:stable.repo
+            curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
+            docker run -itd --name kylinos-v10-sp3 --entrypoint=/bin/bash alanpeng/kylinos:v10-sp3-aarch64
+            docker cp kylinos-v10-sp3:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem ${PWD}/
+            docker stop kylinos-v10-sp3 && docker rm kylinos-v10-sp3
+            mkdir ${PWD}/rpms
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-aarch64.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
+              "yum install -y createrepo && \
+               mkdir -p /rpms/k8s/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
+               curl -L -o /rpms/k8s/centos8/kubernetes-cni-0.8.7-0.aarch64.rpm https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-aarch64/Packages/6878752359e91dfe6b46f7c3142f38812829fb10b70628df54ab8a3ec7a0fb2c-kubernetes-cni-0.8.7-0.aarch64.rpm"
+            docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
+            docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
+            docker stop kylin-yumrepo && docker rm kylin-yumrepo
+            tar zxf ${PWD}/yum-install-cache.tar.gz
+            mkdir -p ${PWD}/rpms/crio/centos8
+            cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
+            rm -rf ${PWD}/yum-install-cache
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
+              "yum install -y createrepo && \
+               yum clean all && \
+               createrepo /rpms/k8s/centos8 && \
+               createrepo /rpms/crio/centos8"
+            sudo chmod -R 755 ${PWD}/rpms
+            docker build -t wise2c/yum-repo:aarch64-$CIRCLE_BRANCH .
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker push wise2c/yum-repo:aarch64-$CIRCLE_BRANCH
+
+  build-tags-aarch64:
+    environment:
+      KUBE_VERSION: '1.19.16'
+      DOCKER_VERSION: '24.0.6-1'
+      CRIO_MAJOR_VERSION: '1.19'
+      CRIO_VERSION: '1.19.2'
+    machine: true
+    resource_class: arm.medium
+    steps:
+      - checkout
+      - run:
+          name: Build an aarch64 container image
+          command: |
+            curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8/devel:kubic:libcontainers:stable.repo
+            curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
+            docker run -itd --name kylinos-v10-sp3 --entrypoint=/bin/bash alanpeng/kylinos:v10-sp3-aarch64
+            docker cp kylinos-v10-sp3:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem ${PWD}/
+            docker stop kylinos-v10-sp3 && docker rm kylinos-v10-sp3
+            mkdir ${PWD}/rpms
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-aarch64.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
+              "yum install -y createrepo && \
+               mkdir -p /rpms/k8s/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
+               curl -L -o /rpms/k8s/centos8/kubernetes-cni-0.8.7-0.aarch64.rpm https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-aarch64/Packages/6878752359e91dfe6b46f7c3142f38812829fb10b70628df54ab8a3ec7a0fb2c-kubernetes-cni-0.8.7-0.aarch64.rpm"
+            docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
+            docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
+            docker stop kylin-yumrepo && docker rm kylin-yumrepo
+            tar zxf ${PWD}/yum-install-cache.tar.gz
+            mkdir -p ${PWD}/rpms/crio/centos8
+            cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
+            rm -rf ${PWD}/yum-install-cache
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
+              "yum install -y createrepo && \
+               yum clean all && \
+               createrepo /rpms/k8s/centos8 && \
+               createrepo /rpms/crio/centos8"
+            sudo chmod -R 755 ${PWD}/rpms
+            docker build -t wise2c/yum-repo:aarch64-$CIRCLE_TAG .
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker push wise2c/yum-repo:aarch64-$CIRCLE_TAG
+
+  build-branches-multi-arch:
+    machine: true
+    steps:
+      - run:
+          name: Build a multi-arch container image
+          command: |
+            docker manifest create wise2c/yum-repo:$CIRCLE_BRANCH wise2c/yum-repo:amd64-$CIRCLE_BRANCH wise2c/yum-repo:aarch64-$CIRCLE_BRANCH
+            docker manifest annotate wise2c/yum-repo:$CIRCLE_BRANCH wise2c/yum-repo:amd64-$CIRCLE_BRANCH --os linux --arch amd64
+            docker manifest annotate wise2c/yum-repo:$CIRCLE_BRANCH wise2c/yum-repo:aarch64-$CIRCLE_BRANCH --os linux --arch arm64
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker manifest push wise2c/yum-repo:$CIRCLE_BRANCH
+
+  build-tags-multi-arch:
+    machine: true
+    steps:
+      - run:
+          name: Build a multi-arch container image
+          command: |
+            docker manifest create wise2c/yum-repo:$CIRCLE_TAG wise2c/yum-repo:amd64-$CIRCLE_TAG wise2c/yum-repo:aarch64-$CIRCLE_TAG
+            docker manifest annotate wise2c/yum-repo:$CIRCLE_TAG wise2c/yum-repo:amd64-$CIRCLE_TAG --os linux --arch amd64
+            docker manifest annotate wise2c/yum-repo:$CIRCLE_TAG wise2c/yum-repo:aarch64-$CIRCLE_TAG --os linux --arch arm64
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker manifest push wise2c/yum-repo:$CIRCLE_TAG
+
+workflows:
+  version: 2
+  build-for-branches:
+    jobs:
+      - build-branches-amd64
+      - build-branches-aarch64
+      - build-branches-multi-arch:
+          requires:
+            - build-branches-amd64
+            - build-branches-aarch64
+  build-for-tags:
+    jobs:
+      - build-tags-amd64:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - build-tags-aarch64:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - build-tags-multi-arch:
+          requires:
+            - build-tags-amd64
+            - build-tags-aarch64
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
