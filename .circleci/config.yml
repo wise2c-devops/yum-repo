@@ -58,7 +58,7 @@ jobs:
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
             tar zxf ${PWD}/yum-install-cache.tar.gz
-            sudo kdir -p ${PWD}/rpms/crio/centos8
+            sudo mkdir -p ${PWD}/rpms/crio/centos8
             sudo cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
             sudo rm -rf ${PWD}/yum-install-cache
             docker run -t --rm -v ${PWD}/rpms:/rpms alanpeng/kylinos:v10-sp2 bash -c \
