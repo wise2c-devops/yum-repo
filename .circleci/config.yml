@@ -2,7 +2,7 @@ jobs:
   build-branches-amd64:
     environment:
       CEPH_VERSION: '18.2.0'
-      KUBE_VERSION: '1.27.6'
+      KUBE_VERSION: '1.27.7'
       DOCKER_VERSION: '24.0.6-1'
       CRIO_MAJOR_VERSION: '1.27'
       CRIO_VERSION: '1.27.1'
@@ -16,7 +16,7 @@ jobs:
             curl -L -o ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_9_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8_Stream/devel:kubic:libcontainers:stable.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-amd64.repo:/etc/yum.repos.d/kubernetes.repo almalinux:9.2 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:9.3 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
@@ -27,9 +27,9 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} --disableexcludes=kubernetes"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:9.2 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo rockylinux:9.3 bash -c \
               "yum -y install --downloadonly --downloaddir=/rpms/crio/centos9 podman cri-o container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-amd64.repo:/etc/yum.repos.d/kubernetes.repo almalinux:8.4 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:8.9 bash -c \
               "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum install -y yum-utils && \
@@ -39,7 +39,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} --disableexcludes=kubernetes"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:8.4 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo rockylinux:8.9 bash -c \
               "mkdir -p /rpms/crio/centos8 && \
                yum install -y createrepo && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
@@ -56,7 +56,7 @@ jobs:
   build-tags-amd64:
     environment:
       CEPH_VERSION: '18.2.0'
-      KUBE_VERSION: '1.27.6'
+      KUBE_VERSION: '1.27.7'
       DOCKER_VERSION: '24.0.6-1'
       CRIO_MAJOR_VERSION: '1.27'
       CRIO_VERSION: '1.27.1'
@@ -70,7 +70,7 @@ jobs:
             curl -L -o ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_9_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8_Stream/devel:kubic:libcontainers:stable.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-amd64.repo:/etc/yum.repos.d/kubernetes.repo almalinux:9.2 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:9.3 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
@@ -81,9 +81,9 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} --disableexcludes=kubernetes"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:9.2 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo rockylinux:9.3 bash -c \
               "yum -y install --downloadonly --downloaddir=/rpms/crio/centos9 podman cri-o container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-amd64.repo:/etc/yum.repos.d/kubernetes.repo almalinux:8.4 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:8.9 bash -c \
               "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum install -y yum-utils && \
@@ -93,7 +93,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} --disableexcludes=kubernetes"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:8.4 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo rockylinux:8.9 bash -c \
               "mkdir -p /rpms/crio/centos8 && \
                yum install -y createrepo && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
@@ -110,7 +110,7 @@ jobs:
   build-branches-aarch64:
     environment:
       CEPH_VERSION: '18.2.0'
-      KUBE_VERSION: '1.27.6'
+      KUBE_VERSION: '1.27.7'
       DOCKER_VERSION: '24.0.6-1'
       CRIO_MAJOR_VERSION: '1.27'
       CRIO_VERSION: '1.27.1'
@@ -125,7 +125,7 @@ jobs:
             curl -L -o ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_9_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8_Stream/devel:kubic:libcontainers:stable.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-aarch64.repo:/etc/yum.repos.d/kubernetes.repo almalinux:9.2 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:9.3 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
@@ -136,9 +136,9 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 open-vm-tools nfs-utils && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} --disableexcludes=kubernetes"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:9.2 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo rockylinux:9.3 bash -c \
               "yum -y install --downloadonly --downloaddir=/rpms/crio/centos9 podman cri-o container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-aarch64.repo:/etc/yum.repos.d/kubernetes.repo almalinux:8.4 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:8.9 bash -c \
               "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum install -y yum-utils && \
@@ -148,7 +148,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 nfs-utils && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} --disableexcludes=kubernetes"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:8.4 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo rockylinux:8.9 bash -c \
               "mkdir -p /rpms/crio/centos8 && \
                yum install -y createrepo && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
@@ -165,7 +165,7 @@ jobs:
   build-tags-aarch64:
     environment:
       CEPH_VERSION: '18.2.0'
-      KUBE_VERSION: '1.27.6'
+      KUBE_VERSION: '1.27.7'
       DOCKER_VERSION: '24.0.6-1'
       CRIO_MAJOR_VERSION: '1.27'
       CRIO_VERSION: '1.27.1'
@@ -180,7 +180,7 @@ jobs:
             curl -L -o ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_9_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8_Stream/devel:kubic:libcontainers:stable.repo
             curl -L -o ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_8_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-aarch64.repo:/etc/yum.repos.d/kubernetes.repo almalinux:9.2 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:9.3 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
@@ -191,9 +191,9 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 open-vm-tools nfs-utils && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} --disableexcludes=kubernetes"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:9.2 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo rockylinux:9.3 bash -c \
               "yum -y install --downloadonly --downloaddir=/rpms/crio/centos9 podman cri-o container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-aarch64.repo:/etc/yum.repos.d/kubernetes.repo almalinux:8.4 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:8.9 bash -c \
               "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum install -y yum-utils && \
@@ -203,7 +203,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 nfs-utils && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} --disableexcludes=kubernetes"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo almalinux:8.4 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos8-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos8-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo rockylinux:8.9 bash -c \
               "mkdir -p /rpms/crio/centos8 && \
                yum install -y createrepo && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
