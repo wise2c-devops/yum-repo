@@ -13,7 +13,8 @@ jobs:
           name: Build an amd64 container image
           command: |
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
-              "yum remove -y tar && \
+              "yum install tree && \
+               yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                yum clean all && \
                mkdir -p /rpms/k8s/centos9 && \
