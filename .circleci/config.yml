@@ -169,6 +169,7 @@ jobs:
             docker push wise2c/yum-repo:aarch64-$CIRCLE_BRANCH
 
   build-tags-aarch64:
+    environment:
       CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.28.6'
       DOCKER_VERSION: '25.0.3-1'
