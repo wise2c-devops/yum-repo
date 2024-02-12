@@ -205,8 +205,17 @@ jobs:
                curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install podman cri-o runc crun && \
+               echo 'Debug at line 208 #################################################################################################' && \
+               yum -y install podman && \
+               echo 'Debug at line 210 #################################################################################################' && \
+               yum -y install cri-o && \
+               echo 'Debug at line 212 #################################################################################################' && \
+               yum -y install runc && \ 
+               echo 'Debug at line 214 #################################################################################################' && \
+               yum -y install crun && \
+               echo 'Debug at line 216 #################################################################################################' && \
                yum -y install docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
+               echo 'Debug at line 218 #################################################################################################' && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
