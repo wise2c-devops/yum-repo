@@ -168,7 +168,8 @@ jobs:
                createrepo /rpms/k8s/centos9 && \
                createrepo /rpms/k8s/centos8 && \
                createrepo /rpms/ceph/centos9 && \
-               createrepo /rpms/ceph/centos8"
+               createrepo /rpms/ceph/centos8 && \
+               createrepo /rpms/docker/centos8"
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:aarch64-$CIRCLE_BRANCH .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
@@ -231,7 +232,8 @@ jobs:
                createrepo /rpms/k8s/centos9 && \
                createrepo /rpms/k8s/centos8 && \
                createrepo /rpms/ceph/centos9 && \
-               createrepo /rpms/ceph/centos8"
+               createrepo /rpms/ceph/centos8 && \
+               createrepo /rpms/docker/centos8"
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:aarch64-$CIRCLE_TAG .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
