@@ -49,7 +49,7 @@ jobs:
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
-               curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
@@ -116,7 +116,7 @@ jobs:
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
-               curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
@@ -184,7 +184,7 @@ jobs:
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
-               curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
@@ -251,7 +251,7 @@ jobs:
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
-               curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
