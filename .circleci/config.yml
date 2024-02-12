@@ -43,7 +43,8 @@ jobs:
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done && \               
+               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done && \
+               yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
                createrepo /rpms/k8s/centos8 && \
@@ -129,7 +130,7 @@ jobs:
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos9/; done && \               
-               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
+               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos9 && \
@@ -144,12 +145,13 @@ jobs:
                yum -y install podman cri-o runc crun && \
                yum -y install docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \               
+               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done && \               
+               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done && \
+               yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
                createrepo /rpms/k8s/centos8 && \
