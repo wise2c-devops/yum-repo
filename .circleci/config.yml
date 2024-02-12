@@ -25,13 +25,15 @@ jobs:
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos9/; done"
+               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos9/; done && \
+               tree /rpms"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos9/; done"
+               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos9/; done && \
+               tree /rpms"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "yum remove -y tar && \
@@ -46,7 +48,8 @@ jobs:
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
+               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done && \
+               tree /rpms"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
@@ -60,7 +63,9 @@ jobs:
                createrepo /rpms/ceph/centos9 && \
                createrepo /rpms/ceph/centos8 && \
                createrepo /rpms/docker/centos9 && \
-               createrepo /rpms/docker/centos8"
+               createrepo /rpms/docker/centos8 && \
+               tree /rpms"
+            sudo tree ${PWD}/rpms
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:amd64-$CIRCLE_BRANCH .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
