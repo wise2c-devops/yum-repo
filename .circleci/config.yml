@@ -12,8 +12,7 @@ jobs:
       - run:
           name: Build an amd64 container image
           command: |
-            sudo apt-get install tree
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
+            docker run -itd --name rockylinux -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                yum clean all && \
@@ -26,16 +25,21 @@ jobs:
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos9 && \
-               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos9/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos9/; done && \
+               sleep infinity"
+            docker cp rockylinux:/rpms ${PWD}/
+            docker stop rockylinux && docker rm rockylinux
                
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
+            docker run -itd --name rockylinux -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
                for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos9/; done && \
-               tree /rpms"
+               sleep infinity"
+            docker cp rockylinux:/rpms/docker ${PWD}/rpms/
+            docker stop rockylinux && docker rm rockylinux
                
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
+            docker run -itd --name rockylinux -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                yum clean all && \
@@ -48,14 +52,22 @@ jobs:
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos8 && \
-               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos8/; done && \
+               sleep infinity"
+            docker cp rockylinux:/rpms/k8s/centos8 ${PWD}/rpms/k8s/
+            docker stop rockylinux && docker rm rockylinux
                
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
+            docker run -itd --name rockylinux -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
-               yum install -y createrepo && \
+               sleep infinity"
+            docker cp rockylinux:/rpms/docker/centos8 ${PWD}/rpms/docker/
+            docker stop rockylinux && docker rm rockylinux
+               
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.9 bash -c \
+              "yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
                createrepo /rpms/k8s/centos8 && \
@@ -63,7 +75,6 @@ jobs:
                createrepo /rpms/ceph/centos8 && \
                createrepo /rpms/docker/centos9 && \
                createrepo /rpms/docker/centos8"
-            sudo tree ${PWD}/rpms
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:amd64-$CIRCLE_BRANCH .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
