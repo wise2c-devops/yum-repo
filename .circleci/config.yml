@@ -6,7 +6,7 @@ jobs:
       DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.28'
       CRIO_VERSION: '1.28.3'
-    machine: true
+    machine:
       docker_layer_caching: true
     steps:
       - checkout
