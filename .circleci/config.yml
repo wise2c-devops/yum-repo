@@ -12,28 +12,27 @@ jobs:
       - run:
           name: Build an amd64 container image
           command: |
+            sudo apt-get install tree
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
-              "yum install -y tree && \
-               yum remove -y tar && \
+              "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                yum clean all && \
                mkdir -p /rpms/k8s/centos9 && \
                yum -y install tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
                yum -y install podman cri-o crun && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos9/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/k8s/centos9/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos9/; done && \
-               tree /rpms"
-
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos9/; done"
+               
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos9/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos9/; done && \
                tree /rpms"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
@@ -44,19 +43,18 @@ jobs:
                yum -y install tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
                yum -y install podman cri-o crun && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done && \
-               tree /rpms"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
                yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
@@ -64,8 +62,7 @@ jobs:
                createrepo /rpms/ceph/centos9 && \
                createrepo /rpms/ceph/centos8 && \
                createrepo /rpms/docker/centos9 && \
-               createrepo /rpms/docker/centos8 && \
-               tree /rpms"
+               createrepo /rpms/docker/centos8"
             sudo tree ${PWD}/rpms
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:amd64-$CIRCLE_BRANCH .
@@ -93,18 +90,18 @@ jobs:
                yum -y install tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
                yum -y install podman cri-o crun && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos9/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/k8s/centos9/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos9/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos9/; done"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos9/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos9/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "yum remove -y tar && \
@@ -114,18 +111,18 @@ jobs:
                yum -y install tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
                yum -y install podman cri-o crun && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
                yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
@@ -153,6 +150,7 @@ jobs:
       - run:
           name: Build an aarch64 container image
           command: |
+            sudo apt-get install tree
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
@@ -161,18 +159,18 @@ jobs:
                yum -y install tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
                yum -y install podman cri-o crun && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos9/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/k8s/centos9/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
                yum clean all && \
 
                mkdir -p /rpms/ceph/centos9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos9/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos9/; done"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos9/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos9/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "yum remove -y tar && \
@@ -182,18 +180,18 @@ jobs:
                yum -y install tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
                yum -y install podman cri-o crun && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
                yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
@@ -202,6 +200,7 @@ jobs:
                createrepo /rpms/ceph/centos8 && \
                createrepo /rpms/docker/centos9 && \
                createrepo /rpms/docker/centos8"
+            sudo tree ${PWD}/rpms
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:aarch64-$CIRCLE_BRANCH .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
@@ -228,18 +227,18 @@ jobs:
                yum -y install tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
                yum -y install podman cri-o crun && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos9/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/k8s/centos9/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
                yum clean all && \
 
                mkdir -p /rpms/ceph/centos9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos9/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos9/; done"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:9.3 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos9/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos9/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "yum remove -y tar && \
@@ -249,18 +248,18 @@ jobs:
                yum -y install tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
                yum -y install podman cri-o crun && \
                yum -y install kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/k8s/centos8/; done && \
                yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
                yum clean all && \
                yum -y install ceph ceph-radosgw rbd-nbd rbd-mirror && \
                mkdir -p /rpms/ceph/centos8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/ceph/centos8/; done"
                
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/dnf.conf:/etc/yum.repos.d/dnf.conf rockylinux:8.9 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
-               for i in $(find /var/cache -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
+               for i in $(find /var/cache/dnf/ -name *.rpm); do cp $i /rpms/docker/centos8/; done && \
                yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
