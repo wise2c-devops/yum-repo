@@ -1,9 +1,9 @@
 jobs:
   build-branches-amd64:
     environment:
-      CEPH_VERSION: '18.2.0'
+      CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.29.1'
-      DOCKER_VERSION: '24.0.6-1'
+      DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.1'
     machine: true
@@ -12,38 +12,51 @@ jobs:
       - run:
           name: Build an amd64 container image
           command: |
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:9.3 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.2 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
-               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
-               yum install -y yum-utils && \
-               yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/k8s/centos9 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 python3-docker python-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.3 bash -c \
-              "yum -y install --downloadonly --downloaddir=/rpms/crio/centos9 podman cri-o containers-common container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:8.9 bash -c \
-              "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
-               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
-               yum install -y yum-utils && \
-               yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.2 bash -c \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               mkdir -p /rpms/docker/centos9 && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.2 bash -c \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
+               mkdir -p /rpms/ceph/centos9 && \
+               yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
+               
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:8.8 bash -c \
+              "yum remove -y tar && \
+               yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/k8s/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:8.9 bash -c \
-              "mkdir -p /rpms/crio/centos8 && \
-               yum install -y createrepo && \
-               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o containers-common container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               mkdir -p /rpms/docker/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
+               mkdir -p /rpms/ceph/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/ceph/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror"
+               
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
                createrepo /rpms/k8s/centos8 && \
-               createrepo /rpms/crio/centos9 && \
-               createrepo /rpms/crio/centos8"
+               createrepo /rpms/ceph/centos9 && \
+               createrepo /rpms/ceph/centos8 && \
+               createrepo /rpms/docker/centos9 && \
+               createrepo /rpms/docker/centos8"
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:amd64-$CIRCLE_BRANCH .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
@@ -51,9 +64,9 @@ jobs:
 
   build-tags-amd64:
     environment:
-      CEPH_VERSION: '18.2.0'
+      CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.29.1'
-      DOCKER_VERSION: '24.0.6-1'
+      DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.1'
     machine: true
@@ -62,38 +75,51 @@ jobs:
       - run:
           name: Build an amd64 container image
           command: |
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:9.3 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.2 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
-               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
-               yum install -y yum-utils && \
-               yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/k8s/centos9 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 python3-docker python-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.3 bash -c \
-              "yum -y install --downloadonly --downloaddir=/rpms/crio/centos9 podman cri-o containers-common container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:8.9 bash -c \
-              "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
-               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
-               yum install -y yum-utils && \
-               yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.2 bash -c \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               mkdir -p /rpms/docker/centos9 && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.2 bash -c \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
+               mkdir -p /rpms/ceph/centos9 && \
+               yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
+               
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:8.8 bash -c \
+              "yum remove -y tar && \
+               yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/k8s/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-utils && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:8.9 bash -c \
-              "mkdir -p /rpms/crio/centos8 && \
-               yum install -y createrepo && \
-               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o containers-common container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               mkdir -p /rpms/docker/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
+               mkdir -p /rpms/ceph/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/ceph/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror"
+               
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
                createrepo /rpms/k8s/centos8 && \
-               createrepo /rpms/crio/centos9 && \
-               createrepo /rpms/crio/centos8"
+               createrepo /rpms/ceph/centos9 && \
+               createrepo /rpms/ceph/centos8 && \
+               createrepo /rpms/docker/centos9 && \
+               createrepo /rpms/docker/centos8"
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:amd64-$CIRCLE_TAG .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
@@ -101,9 +127,9 @@ jobs:
 
   build-branches-aarch64:
     environment:
-      CEPH_VERSION: '18.2.0'
+      CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.29.1'
-      DOCKER_VERSION: '24.0.6-1'
+      DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.1'
     machine: true
@@ -113,38 +139,52 @@ jobs:
       - run:
           name: Build an aarch64 container image
           command: |
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:9.3 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.2 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
-               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
-               yum install -y yum-utils && \
-               yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/k8s/centos9 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 python3-docker python-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 open-vm-tools nfs-utils && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.3 bash -c \
-              "yum -y install --downloadonly --downloaddir=/rpms/crio/centos9 podman cri-o containers-common container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:8.9 bash -c \
-              "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
-               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
-               yum install -y yum-utils && \
-               yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.2 bash -c \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               mkdir -p /rpms/docker/centos9 && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.2 bash -c \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
+               mkdir -p /rpms/ceph/centos9"
+               # && \
+               # yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
+               
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:8.8 bash -c \
+              "yum remove -y tar && \
+               yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/k8s/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 nfs-utils && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/cri-o.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo rockylinux:8.9 bash -c \
-              "mkdir -p /rpms/crio/centos8 && \
-               yum install -y createrepo && \
-               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o containers-common container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               mkdir -p /rpms/docker/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
+               mkdir -p /rpms/ceph/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/ceph/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror"
+               
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
                createrepo /rpms/k8s/centos8 && \
-               createrepo /rpms/crio/centos9 && \
-               createrepo /rpms/crio/centos8"
+               createrepo /rpms/ceph/centos9 && \
+               createrepo /rpms/ceph/centos8 && \
+               createrepo /rpms/docker/centos9 && \
+               createrepo /rpms/docker/centos8"
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:aarch64-$CIRCLE_BRANCH .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
@@ -152,9 +192,9 @@ jobs:
 
   build-tags-aarch64:
     environment:
-      CEPH_VERSION: '18.2.0'
+      CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.29.1'
-      DOCKER_VERSION: '24.0.6-1'
+      DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.1'
     machine: true
@@ -164,38 +204,52 @@ jobs:
       - run:
           name: Build an aarch64 container image
           command: |
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:9.3 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.2 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
-               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
-               yum install -y yum-utils && \
-               yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/k8s/centos9 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9 python3-docker python-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 open-vm-tools nfs-utils && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.3 bash -c \
-              "yum -y install --downloadonly --downloaddir=/rpms/crio/centos9 podman cri-o containers-common container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo rockylinux:8.9 bash -c \
-              "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
-               yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
-               yum install -y yum-utils && \
-               yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.2 bash -c \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               mkdir -p /rpms/docker/centos9 && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.2 bash -c \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
+               mkdir -p /rpms/ceph/centos9"
+               # && \
+               # yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
+               
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:8.8 bash -c \
+              "yum remove -y tar && \
+               yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/k8s/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 nfs-utils && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/cri-o.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo rockylinux:8.9 bash -c \
-              "mkdir -p /rpms/crio/centos8 && \
-               yum install -y createrepo && \
-               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 podman cri-o containers-common container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
+               mkdir -p /rpms/docker/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
+
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
+               mkdir -p /rpms/ceph/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/ceph/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror"
+               
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
+              "yum install -y createrepo && \
                yum clean all && \
                createrepo /rpms/k8s/centos9 && \
                createrepo /rpms/k8s/centos8 && \
-               createrepo /rpms/crio/centos9 && \
-               createrepo /rpms/crio/centos8"
+               createrepo /rpms/ceph/centos9 && \
+               createrepo /rpms/ceph/centos8 && \
+               createrepo /rpms/docker/centos9 && \
+               createrepo /rpms/docker/centos8"
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:aarch64-$CIRCLE_TAG .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
