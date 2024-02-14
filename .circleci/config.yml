@@ -17,7 +17,7 @@ jobs:
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/k8s/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.3 bash -c \
@@ -35,7 +35,7 @@ jobs:
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.9 bash -c \
@@ -80,7 +80,7 @@ jobs:
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/k8s/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.3 bash -c \
@@ -98,7 +98,7 @@ jobs:
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz open-vm-tools nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.9 bash -c \
@@ -144,7 +144,7 @@ jobs:
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/k8s/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.3 bash -c \
@@ -163,7 +163,7 @@ jobs:
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.9 bash -c \
@@ -209,7 +209,7 @@ jobs:
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/k8s/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.3 bash -c \
@@ -228,7 +228,7 @@ jobs:
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils python3-docker python3-chardet python3-requests audit-libs-python3 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.9 bash -c \
