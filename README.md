@@ -23,11 +23,21 @@ enabled=1
 
 gpgcheck=0
 
-[wise2c-crio]
+[wise2c-docker]
 
-name=wise2c-crio
+name=wise2c-docker
 
-baseurl=http://repo-server-ip:2009/rpms/crio/centos9
+baseurl=http://repo-server-ip:2009/rpms/docker/centos9
+
+enabled=1
+
+gpgcheck=0
+
+[wise2c-ceph]
+
+name=wise2c-ceph
+
+baseurl=http://repo-server-ip:2009/rpms/ceph/centos9
 
 enabled=1
 
@@ -39,12 +49,12 @@ gpgcheck=0
 
 然后就可以直接用yum install命令命令安装相关软件了。例如：
 
-yum --disablerepo=* --enablerepo=wise2c-k8s install docker-ce docker-ce-cli docker-python docker-compose
-
 yum --disablerepo=* --enablerepo=wise2c-k8s install rsync python-chardet jq nfs-utils
   
 yum --disablerepo=* --enablerepo=wise2c-k8s install kubernetes-cni kubectl kubelet kubeadm
 
-yum --disablerepo=* --enablerepo=wise2c-k8s install ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror
+yum --disablerepo=* --enablerepo=wise2c-k8s install cri-o podman crun
 
-yum --disablerepo=* --enablerepo=wise2c-crio install crio podman
+yum --disablerepo=* --enablerepo=wise2c-docker install docker-ce docker-ce-cli
+
+yum --disablerepo=* --enablerepo=wise2c-ceph install ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror
