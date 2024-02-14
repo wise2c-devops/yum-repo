@@ -26,7 +26,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.3 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/ceph/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -44,7 +44,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.9 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/ceph/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -89,7 +89,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.3 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/ceph/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -107,7 +107,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.9 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/ceph/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -153,7 +153,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
             #docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.3 bash -c \
-            #  "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
+            #  "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
             #   mkdir -p /rpms/ceph/centos9 && \
             #   yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -171,7 +171,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.9 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/ceph/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -217,7 +217,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
             #docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.3 bash -c \
-            #  "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm && \
+            #  "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
             #   mkdir -p /rpms/ceph/centos9 && \
             #   yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -235,7 +235,7 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.9 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
                mkdir -p /rpms/ceph/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos8 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
