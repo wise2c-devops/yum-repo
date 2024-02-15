@@ -14,7 +14,7 @@ jobs:
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo alanpeng/kylinos:v10-sp2 bash -c \
               "yum install -y createrepo && \
                mkdir -p /rpms/k8s/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman crun kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
