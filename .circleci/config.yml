@@ -20,6 +20,7 @@ jobs:
             docker cp kylinos-v10-sp3:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem ${PWD}/
             docker stop kylinos-v10-sp3 && docker rm kylinos-v10-sp3
             cp ${PWD}/*.repo ${PWD}/yum.repos.d/
+            sed -i "s#$releasever#8#g" ${PWD}/yum.repos.d/*.repo
             mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/yum.repos.d:/etc/yum.repos.d -v ${PWD}/dnf:/etc/dnf \
                                -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2 bash -c \
