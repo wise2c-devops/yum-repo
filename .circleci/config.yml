@@ -84,18 +84,20 @@ jobs:
       - run:
           name: Build an aarch64 container image
           command: |
-            sudo mkdir ${PWD}/rpms
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo alanpeng/kylinos:v10-sp2-aarch64 bash -c \
-              "yum install -y createrepo && \
-               mkdir -p /rpms/k8s/centos8 && \
+            docker run -itd --name kylinos-v10-sp3 --entrypoint=/bin/bash alanpeng/kylinos:v10-sp3
+            docker cp kylinos-v10-sp3:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem ${PWD}/
+            docker stop kylinos-v10-sp3 && docker rm kylinos-v10-sp3
+            mkdir ${PWD}/rpms
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo \
+                                                    -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
+              "mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman"
+               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
             tar zxf ${PWD}/yum-install-cache.tar.gz
-            sudo mkdir -p ${PWD}/rpms/docker/centos8
             sudo cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
             sudo rm -rf ${PWD}/yum-install-cache
             docker run -t --rm -v ${PWD}/rpms:/rpms alanpeng/kylinos:v10-sp2-aarch64 bash -c \
@@ -121,18 +123,20 @@ jobs:
       - run:
           name: Build an aarch64 container image
           command: |
-            sudo mkdir ${PWD}/rpms
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo alanpeng/kylinos:v10-sp2-aarch64 bash -c \
-              "yum install -y createrepo && \
-               mkdir -p /rpms/k8s/centos8 && \
+            docker run -itd --name kylinos-v10-sp3 --entrypoint=/bin/bash alanpeng/kylinos:v10-sp3
+            docker cp kylinos-v10-sp3:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem ${PWD}/
+            docker stop kylinos-v10-sp3 && docker rm kylinos-v10-sp3
+            mkdir ${PWD}/rpms
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo \
+                                                    -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
+              "mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman"
+               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
             tar zxf ${PWD}/yum-install-cache.tar.gz
-            sudo mkdir -p ${PWD}/rpms/docker/centos8
             sudo cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
             sudo rm -rf ${PWD}/yum-install-cache
             docker run -t --rm -v ${PWD}/rpms:/rpms alanpeng/kylinos:v10-sp2-aarch64 bash -c \
