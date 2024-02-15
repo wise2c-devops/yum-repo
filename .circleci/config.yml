@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Build an amd64 container image
           command: |
-            docker run -itd --name rockylinux --entrypoint=/bin/bash rockylinux:8.8
+            docker run -itd --name rockylinux --entrypoint=/bin/bash rockylinux:8.5
             docker cp rockylinux:/etc/yum.repos.d ${PWD}/
             docker cp rockylinux:/etc/dnf ${PWD}/
             docker cp rockylinux:/etc/pki ${PWD}/
