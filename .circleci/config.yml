@@ -1,10 +1,10 @@
 jobs:
   build-branches-amd64:
     environment:
-      KUBE_VERSION: '1.19.16'
-      DOCKER_VERSION: '24.0.6-1'
-      CRIO_MAJOR_VERSION: '1.19'
-      CRIO_VERSION: '1.19.2'
+      KUBE_VERSION: '1.29.1'
+      DOCKER_VERSION: '25.0.3-1'
+      CRIO_MAJOR_VERSION: '1.29'
+      CRIO_VERSION: '1.29.1'
     machine: true
     steps:
       - checkout
