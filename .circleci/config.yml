@@ -2,10 +2,9 @@ jobs:
   build-branches-amd64:
     environment:
       KUBE_VERSION: '1.29.1'
-      DOCKER_VERSION: '25.0.3-1'
+      DOCKER_VERSION: '24.0.6-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.1'
-      AlibabaYumRepo: 'https://mirrors.aliyun.com/docker-ce/linux/centos/8/x86_64/stable/Packages'
     machine: true
     steps:
       - checkout
@@ -13,30 +12,17 @@ jobs:
           name: Build an amd64 container image
           command: |
             sudo mkdir ${PWD}/rpms
-            sudo curl -L -o ${PWD}/rpms/fuse-overlayfs-1.9-2.module.rpm https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/fuse-overlayfs-1.9-2.module_el8.9.0%252B3687%252Bdcd7ef8f.x86_64.rpm
-            sudo curl -L -o ${PWD}/rpms/slirp4netns-1.2.1-1.module.rpm https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/slirp4netns-1.2.1-1.module_el8.9.0%2B3643%2B9234dc3b.x86_64.rpm
-            sudo curl -L -o ${PWD}/rpms/libslirp-4.4.0-1.module.rpm https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/libslirp-4.4.0-1.module_el8.9.0%2B3717%2B81096349.x86_64.rpm
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo alanpeng/kylinos:v10-sp2 bash -c \
               "yum install -y createrepo && \
                mkdir -p /rpms/k8s/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               mkdir -p /rpms/docker/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 \
-                              ${AlibabaYumRepo}/docker-ce-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-ce-cli-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/containerd.io-1.6.24-3.1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-buildx-plugin-0.12.1-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-ce-rootless-extras-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-compose-plugin-2.6.0-3.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-scan-plugin-0.9.0-3.el8.x86_64.rpm \
-                              /rpms/fuse-overlayfs-1.9-2.module.rpm \
-                              /rpms/slirp4netns-1.2.1-1.module.rpm \
-                              /rpms/libslirp-4.4.0-1.module.rpm"
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
+               mkdir -p /rpms/crio/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
             tar zxf ${PWD}/yum-install-cache.tar.gz
-            sudo mkdir -p ${PWD}/rpms/crio/centos8
+            sudo mkdir -p ${PWD}/rpms/docker/centos8
             sudo cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
             sudo rm -rf ${PWD}/yum-install-cache
             docker run -t --rm -v ${PWD}/rpms:/rpms alanpeng/kylinos:v10-sp2 bash -c \
@@ -52,37 +38,27 @@ jobs:
   build-tags-amd64:
     environment:
       KUBE_VERSION: '1.29.1'
-      DOCKER_VERSION: '25.0.3-1'
+      DOCKER_VERSION: '24.0.6-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.1'
-      AlibabaYumRepo: 'https://mirrors.aliyun.com/docker-ce/linux/centos/8/x86_64/stable/Packages'
     machine: true
     steps:
       - checkout
       - run:
           name: Build an amd64 container image
           command: |
+            sudo mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo alanpeng/kylinos:v10-sp2 bash -c \
               "yum install -y createrepo && \
                mkdir -p /rpms/k8s/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               mkdir -p /rpms/docker/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 \
-                              ${AlibabaYumRepo}/docker-ce-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-ce-cli-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/containerd.io-1.6.24-3.1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-buildx-plugin-0.12.1-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-ce-rootless-extras-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-compose-plugin-2.6.0-3.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-scan-plugin-0.9.0-3.el8.x86_64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/fuse-overlayfs-1.9-2.module_el8.9.0%2B3687%2Bdcd7ef8f.x86_64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/slirp4netns-1.2.1-1.module_el8.9.0%2B3643%2B9234dc3b.x86_64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/libslirp-4.4.0-1.module_el8.9.0%2B3717%2B81096349.x86_64.rpm"
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
+               mkdir -p /rpms/crio/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
             tar zxf ${PWD}/yum-install-cache.tar.gz
-            sudo mkdir -p ${PWD}/rpms/crio/centos8
+            sudo mkdir -p ${PWD}/rpms/docker/centos8
             sudo cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
             sudo rm -rf ${PWD}/yum-install-cache
             docker run -t --rm -v ${PWD}/rpms:/rpms alanpeng/kylinos:v10-sp2 bash -c \
@@ -98,10 +74,9 @@ jobs:
   build-branches-aarch64:
     environment:
       KUBE_VERSION: '1.29.1'
-      DOCKER_VERSION: '25.0.3-1'
+      DOCKER_VERSION: '24.0.6-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.1'
-      AlibabaYumRepo: 'https://mirrors.aliyun.com/docker-ce/linux/centos/8/aarch64/stable/Packages'
     machine: true
     resource_class: arm.medium
     steps:
@@ -109,27 +84,18 @@ jobs:
       - run:
           name: Build an aarch64 container image
           command: |
+            sudo mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo alanpeng/kylinos:v10-sp2-aarch64 bash -c \
               "yum install -y createrepo && \
                mkdir -p /rpms/k8s/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               mkdir -p /rpms/docker/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 \
-                              ${AlibabaYumRepo}/docker-ce-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-ce-cli-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/containerd.io-1.6.24-3.1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-buildx-plugin-0.12.1-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-ce-rootless-extras-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-compose-plugin-2.6.0-3.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-scan-plugin-0.9.0-3.el8.x86_64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/aarch64/os/Packages/fuse-overlayfs-1.9-2.module_el8.9.0%2B3687%2Bdcd7ef8f.aarch64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/aarch64/os/Packages/slirp4netns-1.2.1-1.module_el8.9.0%2B3643%2B9234dc3b.aarch64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/aarch64/os/Packages/libslirp-4.4.0-1.module_el8.9.0%2B3717%2B81096349.aarch64.rpm"
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
+               mkdir -p /rpms/crio/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
             tar zxf ${PWD}/yum-install-cache.tar.gz
-            sudo mkdir -p ${PWD}/rpms/crio/centos8
+            sudo mkdir -p ${PWD}/rpms/docker/centos8
             sudo cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
             sudo rm -rf ${PWD}/yum-install-cache
             docker run -t --rm -v ${PWD}/rpms:/rpms alanpeng/kylinos:v10-sp2-aarch64 bash -c \
@@ -145,10 +111,9 @@ jobs:
   build-tags-aarch64:
     environment:
       KUBE_VERSION: '1.29.1'
-      DOCKER_VERSION: '25.0.3-1'
+      DOCKER_VERSION: '24.0.6-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.1'
-      AlibabaYumRepo: 'https://mirrors.aliyun.com/docker-ce/linux/centos/8/aarch64/stable/Packages'
     machine: true
     resource_class: arm.medium
     steps:
@@ -156,27 +121,18 @@ jobs:
       - run:
           name: Build an aarch64 container image
           command: |
+            sudo mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo alanpeng/kylinos:v10-sp2-aarch64 bash -c \
               "yum install -y createrepo && \
                mkdir -p /rpms/k8s/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               mkdir -p /rpms/docker/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 \
-                              ${AlibabaYumRepo}/docker-ce-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-ce-cli-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/containerd.io-1.6.24-3.1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-buildx-plugin-0.12.1-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-ce-rootless-extras-25.0.3-1.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-compose-plugin-2.6.0-3.el8.x86_64.rpm \
-                              ${AlibabaYumRepo}/docker-scan-plugin-0.9.0-3.el8.x86_64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/aarch64/os/Packages/fuse-overlayfs-1.9-2.module_el8.9.0%2B3687%2Bdcd7ef8f.aarch64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/aarch64/os/Packages/slirp4netns-1.2.1-1.module_el8.9.0%2B3643%2B9234dc3b.aarch64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/aarch64/os/Packages/libslirp-4.4.0-1.module_el8.9.0%2B3717%2B81096349.aarch64.rpm"
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
+               mkdir -p /rpms/crio/centos8 && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
             tar zxf ${PWD}/yum-install-cache.tar.gz
-            sudo mkdir -p ${PWD}/rpms/crio/centos8
+            sudo mkdir -p ${PWD}/rpms/docker/centos8
             sudo cp ${PWD}/yum-install-cache/*.rpm ${PWD}/rpms/crio/centos8/
             sudo rm -rf ${PWD}/yum-install-cache
             docker run -t --rm -v ${PWD}/rpms:/rpms alanpeng/kylinos:v10-sp2-aarch64 bash -c \
