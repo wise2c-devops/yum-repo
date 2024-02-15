@@ -17,6 +17,9 @@ jobs:
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/docker/centos8 && \
+               curl -L -o ${PWD}/fuse-overlayfs-1.9-2.module.rpm https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/fuse-overlayfs-1.9-2.module_el8.9.0%252B3687%252Bdcd7ef8f.x86_64.rpm && \
+               curl -L -o ${PWD}/slirp4netns-1.2.1-1.module.rpm https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/slirp4netns-1.2.1-1.module_el8.9.0%2B3643%2B9234dc3b.x86_64.rpm && \
+               curl -L -o ${PWD}/libslirp-4.4.0-1.module.rpm https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/libslirp-4.4.0-1.module_el8.9.0%2B3717%2B81096349.x86_64.rpm && \
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 \
                               ${AlibabaYumRepo}/docker-ce-25.0.3-1.el8.x86_64.rpm \
                               ${AlibabaYumRepo}/docker-ce-cli-25.0.3-1.el8.x86_64.rpm \
@@ -25,9 +28,9 @@ jobs:
                               ${AlibabaYumRepo}/docker-ce-rootless-extras-25.0.3-1.el8.x86_64.rpm \
                               ${AlibabaYumRepo}/docker-compose-plugin-2.6.0-3.el8.x86_64.rpm \
                               ${AlibabaYumRepo}/docker-scan-plugin-0.9.0-3.el8.x86_64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/fuse-overlayfs-1.9-2.module_el8.9.0%2B3687%2Bdcd7ef8f.x86_64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/slirp4netns-1.2.1-1.module_el8.9.0%2B3643%2B9234dc3b.x86_64.rpm \
-                              https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/Packages/libslirp-4.4.0-1.module_el8.9.0%2B3717%2B81096349.x86_64.rpm"
+                              ${PWD}/fuse-overlayfs-1.9-2.module.rpm \
+                              ${PWD}/slirp4netns-1.2.1-1.module.rpm \
+                              ${PWD}/libslirp-4.4.0-1.module.rpm"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
