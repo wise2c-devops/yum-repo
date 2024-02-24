@@ -52,6 +52,7 @@ jobs:
               "yum install -y createrepo && \
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 http://mirror.centos.org/centos/8-stream/AppStream/aarch64/os/Packages/podman-4.9.2-1.module_el8+899+3d7192e3.aarch64.rpm && \
                mkdir -p /rpms/crio/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
