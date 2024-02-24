@@ -12,8 +12,12 @@ jobs:
           name: Build an amd64 container image
           command: |
             sudo mkdir ${PWD}/rpms
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo -v ${PWD}/CentOS8.yepo:/etc/yum.repos.d/CentOS8.repo alanpeng/kylinos:v10-sp2 bash -c \
-              "yum install -y createrepo && \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo -v ${PWD}/CentOS8.yepo:/root/CentOS8.repo alanpeng/kylinos:v10-sp2 bash -c \
+              "rm -f /etc/yum.repos.d/*.repo && \
+               cp /root/cri-o.repo /etc/yum.repos.d/ && \
+               cp /root/kubernetes.repo /etc/yum.repos.d/ && \
+               cp /root/CentOS8.repo /etc/yum.repos.d/ && \
+               yum install -y createrepo && \
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
