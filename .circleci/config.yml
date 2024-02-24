@@ -21,8 +21,31 @@ jobs:
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
-               yum -y install cri-o podman && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman container-selinux"
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 \
+               cri-o
+               podman
+               conmon
+               containernetworking-plugins
+               containers-common
+               criu
+               fuse-overlayfs
+               fuse3
+               fuse3-libs
+               iptables
+               jansson
+               kmod
+               libnet
+               libnftnl
+               libnl3
+               libslirp
+               nftables
+               podman-catatonit
+               protobuf-c
+               runc
+               slirp4netns
+               kubernetes-cni
+               tar
+               iptables-libs"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
@@ -106,7 +129,8 @@ jobs:
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman container-selinux"
+               yum -y install cri-o podman && \
+               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
