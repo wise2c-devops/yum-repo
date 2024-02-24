@@ -45,7 +45,7 @@ jobs:
                slirp4netns \
                kubernetes-cni \
                tar \
-               iptables-libs"
+               iptables-libs-1.8.4-20.el8"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
@@ -153,7 +153,7 @@ jobs:
                slirp4netns \
                kubernetes-cni \
                tar \
-               iptables-libs"
+               iptables-libs-1.8.4-20.el8"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
