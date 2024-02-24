@@ -17,7 +17,7 @@ jobs:
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman"
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/podman-4.9.2-1.module_el8+899+3d7192e3.x86_64.rpm"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
@@ -52,9 +52,8 @@ jobs:
               "yum install -y createrepo && \
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 http://mirror.centos.org/centos/8-stream/AppStream/aarch64/os/Packages/podman-4.9.2-1.module_el8+899+3d7192e3.aarch64.rpm && \
                mkdir -p /rpms/crio/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman"
+               yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/podman-4.9.2-1.module_el8+899+3d7192e3.x86_64.rpm"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
@@ -94,7 +93,7 @@ jobs:
               "mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman"
+               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o http://mirror.centos.org/centos/8-stream/AppStream/aarch64/os/Packages/podman-4.9.2-1.module_el8+899+3d7192e3.aarch64.rpm"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
@@ -133,7 +132,7 @@ jobs:
               "mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman"
+               yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o http://mirror.centos.org/centos/8-stream/AppStream/aarch64/os/Packages/podman-4.9.2-1.module_el8+899+3d7192e3.aarch64.rpm"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
             docker stop kylin-yumrepo && docker rm kylin-yumrepo
