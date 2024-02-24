@@ -12,7 +12,7 @@ jobs:
           name: Build an amd64 container image
           command: |
             sudo mkdir ${PWD}/rpms
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo alanpeng/kylinos:v10-sp2 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo -v ${PWD}/CentOS8.repo:/root/CentOS8.repo alanpeng/kylinos:v10-sp2 bash -c \
               "mkdir /root/yum.repos.d && \
                yum install -y createrepo && \
                cp /etc/yum.repos.d/*.repo /root/yum.repos.d/ && \
@@ -102,7 +102,7 @@ jobs:
             docker stop kylinos-v10-sp3 && docker rm kylinos-v10-sp3
             mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo -v ${PWD}/CentOS8.repo:/root/CentOS8.repo \
-               -v ${PWD}/docker-ce.repo:/root/docker-ce.repo -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
+                                                    -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
               "mkdir /root/yum.repos.d && \
                cp /etc/yum.repos.d/*.repo /root/yum.repos.d/ && \
                rm -f /etc/yum.repos.d/*.repo && \
