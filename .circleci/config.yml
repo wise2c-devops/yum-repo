@@ -21,6 +21,7 @@ jobs:
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
+               yum -y install cri-o podman && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 cri-o podman container-selinux"
             docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
             docker cp kylin-yumrepo:/root/yum-install-cache.tar.gz ${PWD}/
