@@ -21,12 +21,13 @@ jobs:
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
+               curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 \
                docker-ce-${DOCKER_VERSION}.el8 \
                docker-ce-cli-${DOCKER_VERSION}.el8 \
                kubernetes-cni \
                tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils iptables jansson kmod libnet libnftnl libnl3 libslirp nftables protobuf-c \
-               python3-docker python3-chardet python3-requests python3-policycoreutils python3-libsemanage audit-libs-python3 policycoreutils-python-utils \
+               python3-chardet python3-requests python3-policycoreutils python3-libsemanage audit-libs-python3 policycoreutils-python-utils \
                cri-o podman podman-catatonit runc slirp4netns conmon containernetworking-plugins containers-common container-selinux criu fuse-overlayfs fuse3 fuse3-libs \
                iptables-libs-1.8.4-20.el8"
             #docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2
@@ -112,12 +113,13 @@ jobs:
                mkdir -p /rpms/k8s/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                mkdir -p /rpms/crio/centos8 && \
+               curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 \
                docker-ce-${DOCKER_VERSION}.el8 \
                docker-ce-cli-${DOCKER_VERSION}.el8 \
                kubernetes-cni \
                tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils iptables jansson kmod libnet libnftnl libnl3 libslirp nftables protobuf-c \
-               python3-docker python3-chardet python3-requests python3-policycoreutils python3-libsemanage audit-libs-python3 policycoreutils-python-utils \
+               python3-chardet python3-requests python3-policycoreutils python3-libsemanage audit-libs-python3 policycoreutils-python-utils \
                cri-o podman podman-catatonit runc slirp4netns conmon containernetworking-plugins containers-common container-selinux criu fuse-overlayfs fuse3 fuse3-libs \
                iptables-libs-1.8.4-20.el8"
             #docker run -itd --name=kylin-yumrepo --entrypoint=/bin/sh alanpeng/kylin-breeze-yumrepo:v10-sp2-aarch64
