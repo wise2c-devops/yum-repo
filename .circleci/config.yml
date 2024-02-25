@@ -1,10 +1,10 @@
 jobs:
   build-branches-amd64:
     environment:
-      KUBE_VERSION: '1.29.1'
+      KUBE_VERSION: '1.29.2'
       DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.29'
-      CRIO_VERSION: '1.29.1'
+      CRIO_VERSION: '1.29.2'
     machine: true
     steps:
       - checkout
@@ -38,7 +38,7 @@ jobs:
 
   build-tags-amd64:
     environment:
-      KUBE_VERSION: '1.29.1'
+      KUBE_VERSION: '1.29.2'
       DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.2'
@@ -75,7 +75,7 @@ jobs:
 
   build-branches-aarch64:
     environment:
-      KUBE_VERSION: '1.29.1'
+      KUBE_VERSION: '1.29.2'
       DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.2'
@@ -90,6 +90,11 @@ jobs:
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo \
                                                     -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo alanpeng/kylinos:v10-sp3-aarch64 bash -c \
               "cp /etc/yum.repos.d/*.repo /root && \
+               echo ***************************************************** && \
+               cat /etc/os-release && \
+               cat /etc/kylin-release && \
+               rpm -qa |grep release && \
+               yum install -y createrepo && \
                mkdir -p /rpms/base/centos8 && \
                mkdir -p /rpms/k8s/centos8 && \
                mkdir -p /rpms/crio/centos8 && \
@@ -100,12 +105,7 @@ jobs:
                rm -f /etc/yum.repos.d/*.repo && cp /root/cri-o.repo /root/CentOS8.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/kylin*.repo /etc/yum.repos.d/ && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
-            docker run -itd --name kylinos-v10-sp3 --entrypoint=/bin/bash alanpeng/kylinos:v10-sp3-aarch64
-            docker cp kylinos-v10-sp3:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem ${PWD}/
-            docker stop kylinos-v10-sp3 && docker rm kylinos-v10-sp3
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
-              "yum install -y createrepo && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                createrepo /rpms/base/centos8 && \
                createrepo /rpms/k8s/centos8 && \
                createrepo /rpms/crio/centos8 && \
@@ -117,8 +117,8 @@ jobs:
 
   build-tags-aarch64:
     environment:
-      KUBE_VERSION: '1.29.1'
-      DOCKER_VERSION: '24.0.6-1'
+      KUBE_VERSION: '1.29.2'
+      DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.29'
       CRIO_VERSION: '1.29.2'
     machine: true
@@ -132,6 +132,11 @@ jobs:
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo \
                                                     -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo alanpeng/kylinos:v10-sp3-aarch64 bash -c \
               "cp /etc/yum.repos.d/*.repo /root && \
+               echo ***************************************************** && \
+               cat /etc/os-release && \
+               cat /etc/kylin-release && \
+               rpm -qa |grep release && \
+               yum install -y createrepo && \
                mkdir -p /rpms/base/centos8 && \
                mkdir -p /rpms/k8s/centos8 && \
                mkdir -p /rpms/crio/centos8 && \
@@ -142,15 +147,11 @@ jobs:
                rm -f /etc/yum.repos.d/*.repo && cp /root/cri-o.repo /root/CentOS8.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/kylin*.repo /etc/yum.repos.d/ && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8" 
-            docker run -itd --name kylinos-v10-sp3 --entrypoint=/bin/bash alanpeng/kylinos:v10-sp3-aarch64
-            docker cp kylinos-v10-sp3:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem ${PWD}/
-            docker stop kylinos-v10-sp3 && docker rm kylinos-v10-sp3            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/tls-ca-bundle.pem:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem alanpeng/kylinos:v10-sp2-aarch64 bash -c \
-              "yum install -y createrepo && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                createrepo /rpms/base/centos8 && \
                createrepo /rpms/k8s/centos8 && \
                createrepo /rpms/crio/centos8 && \
-               createrepo /rpms/docker/centos8" 
+               createrepo /rpms/docker/centos8"
             sudo chmod -R 755 ${PWD}/rpms
             docker build -t wise2c/yum-repo:aarch64-$CIRCLE_TAG .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
