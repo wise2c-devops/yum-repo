@@ -88,7 +88,7 @@ jobs:
           command: |
             sudo mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo \
-                                                    -v ${PWD}/CentOS8-arm64.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo alanpeng/kylinos:v10-sp3-aarch64 bash -c \
+                                                    -v ${PWD}/CentOS8-arm64.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo lhrbest/kylinos:v10_sp3_3.0 bash -c \
               "cp /etc/yum.repos.d/*.repo /root && \
                yum install -y createrepo && \
                mkdir -p /rpms/base/centos8 && \
@@ -126,7 +126,7 @@ jobs:
           command: |
             sudo mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo \
-                                                    -v ${PWD}/CentOS8-arm64.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo alanpeng/kylinos:v10-sp3-aarch64 bash -c \
+                                                    -v ${PWD}/CentOS8-arm64.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo lhrbest/kylinos:v10_sp3_3.0 bash -c \
               "cp /etc/yum.repos.d/*.repo /root && \
                yum install -y createrepo && \
                mkdir -p /rpms/base/centos8 && \
