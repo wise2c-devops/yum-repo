@@ -26,7 +26,7 @@ jobs:
                rm -f /etc/yum.repos.d/*.repo && cp /root/cri-o.repo /root/CentOS8.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/kylin*.repo /etc/yum.repos.d/ && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION} docker-ce-cli-${DOCKER_VERSION} && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                createrepo /rpms/base/centos8 && \
                createrepo /rpms/k8s/centos8 && \
                createrepo /rpms/crio/centos8 && \
@@ -120,7 +120,7 @@ jobs:
                rm -f /etc/yum.repos.d/*.repo && cp /root/cri-o.repo /root/CentOS8.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/kylin*.repo /etc/yum.repos.d/ && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION} docker-ce-cli-${DOCKER_VERSION} && \
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                createrepo /rpms/base/centos8 && \
                createrepo /rpms/k8s/centos8 && \
                createrepo /rpms/crio/centos8 && \
