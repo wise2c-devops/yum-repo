@@ -21,7 +21,7 @@ jobs:
                mkdir -p /rpms/crio/centos8 && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/base/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils && \
-               rm -f /etc/yum.repos.d/*.repo && cp /root/*.repo /etc/yum.repos.d/ && rm -f /etc/yum.repos.d/CentOS8.repo && \
+               rm -f /etc/yum.repos.d/*.repo && cp /root/*.repo /etc/yum.repos.d/ && rm -f /etc/yum.repos.d/kylin*.repo && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/kylin*.repo /etc/yum.repos.d/ && \
@@ -57,7 +57,7 @@ jobs:
                mkdir -p /rpms/crio/centos8 && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/base/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils && \
-               rm -f /etc/yum.repos.d/*.repo && cp /root/*.repo /etc/yum.repos.d/ && rm -f /etc/yum.repos.d/CentOS8.repo && \
+               rm -f /etc/yum.repos.d/*.repo && cp /root/*.repo /etc/yum.repos.d/ && rm -f /etc/yum.repos.d/kylin*.repo && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/kylin*.repo /etc/yum.repos.d/ && \
@@ -98,7 +98,7 @@ jobs:
                mkdir -p /rpms/crio/centos8 && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/base/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils && \
-               rm -f /etc/yum.repos.d/*.repo && cp /root/*.repo /etc/yum.repos.d/ && rm -f /etc/yum.repos.d/CentOS8.repo && \
+               rm -f /etc/yum.repos.d/*.repo && cp /root/*.repo /etc/yum.repos.d/ && rm -f /etc/yum.repos.d/kylin*.repo && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/kylin*.repo /etc/yum.repos.d/ && \
@@ -139,7 +139,7 @@ jobs:
                mkdir -p /rpms/crio/centos8 && \
                mkdir -p /rpms/docker/centos8 && \
                yum -y install --downloadonly --downloaddir=/rpms/base/centos8 tar chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz nfs-utils && \
-               rm -f /etc/yum.repos.d/*.repo && cp /root/*.repo /etc/yum.repos.d/ && rm -f /etc/yum.repos.d/CentOS8.repo && \
+               rm -f /etc/yum.repos.d/*.repo && cp /root/*.repo /etc/yum.repos.d/ && rm -f /etc/yum.repos.d/kylin*.repo && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} kubernetes-cni && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/kylin*.repo /etc/yum.repos.d/ && \
