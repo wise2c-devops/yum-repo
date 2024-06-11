@@ -1,10 +1,10 @@
 jobs:
   build-branches-amd64:
     environment:
-      KUBE_VERSION: '1.30.0'
+      KUBE_VERSION: '1.30.1'
       DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.30'
-      CRIO_VERSION: '1.30.0'
+      CRIO_VERSION: '1.30.1'
     machine: true
     steps:
       - checkout
@@ -13,7 +13,7 @@ jobs:
           command: |
             sudo mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo \
-                                                    -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo openeuler/openeuler:22.03-lts-sp3 bash -c \
+                                                    -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo openeuler/openeuler:24.03-lts bash -c \
               "yum remove -y tar && \
                mkdir /root/default-repo && cp /etc/yum.repos.d/*.repo /root/default-repo/ && \
                yum install -y createrepo && \
@@ -39,10 +39,10 @@ jobs:
 
   build-tags-amd64:
     environment:
-      KUBE_VERSION: '1.30.0'
+      KUBE_VERSION: '1.30.1'
       DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.30'
-      CRIO_VERSION: '1.30.0'
+      CRIO_VERSION: '1.30.1'
     machine: true
     steps:
       - checkout
@@ -51,7 +51,7 @@ jobs:
           command: |
             sudo mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo \
-                                                    -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo openeuler/openeuler:22.03-lts-sp3 bash -c \
+                                                    -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo openeuler/openeuler:24.03-lts bash -c \
               "yum remove -y tar && \
                mkdir /root/default-repo && cp /etc/yum.repos.d/*.repo /root/default-repo/ && \
                yum install -y createrepo && \
@@ -77,10 +77,10 @@ jobs:
 
   build-branches-aarch64:
     environment:
-      KUBE_VERSION: '1.30.0'
+      KUBE_VERSION: '1.30.1'
       DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.30'
-      CRIO_VERSION: '1.30.0'
+      CRIO_VERSION: '1.30.1'
     machine: true
     resource_class: arm.medium
     steps:
@@ -90,7 +90,7 @@ jobs:
           command: |
             sudo mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo \
-                                                    -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo openeuler/openeuler:22.03-lts-sp3 bash -c \
+                                                    -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo openeuler/openeuler:24.03-lts bash -c \
               "yum remove -y tar && \
                mkdir /root/default-repo && cp /etc/yum.repos.d/*.repo /root/default-repo/ && \
                yum install -y createrepo && \
@@ -116,10 +116,10 @@ jobs:
 
   build-tags-aarch64:
     environment:
-      KUBE_VERSION: '1.30.0'
+      KUBE_VERSION: '1.30.1'
       DOCKER_VERSION: '25.0.3-1'
       CRIO_MAJOR_VERSION: '1.30'
-      CRIO_VERSION: '1.30.0'
+      CRIO_VERSION: '1.30.1'
     machine: true
     resource_class: arm.medium
     steps:
@@ -129,7 +129,7 @@ jobs:
           command: |
             sudo mkdir ${PWD}/rpms
             docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/root/kubernetes.repo -v ${PWD}/cri-o.repo:/root/cri-o.repo \
-                                                    -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo openeuler/openeuler:22.03-lts-sp3 bash -c \
+                                                    -v ${PWD}/CentOS8.repo:/root/CentOS8.repo -v ${PWD}/docker-ce.repo:/root/docker-ce.repo openeuler/openeuler:24.03-lts bash -c \
               "yum remove -y tar && \
                mkdir /root/default-repo && cp /etc/yum.repos.d/*.repo /root/default-repo/ && \
                yum install -y createrepo && \
