@@ -2,8 +2,8 @@ jobs:
   build-branches-amd64:
     environment:
       CEPH_VERSION: '18.2.1'
-      KUBE_VERSION: '1.28.9'
-      DOCKER_VERSION: '26.0.0-1'
+      KUBE_VERSION: '1.28.15'
+      DOCKER_VERSION: '27.3.1-1'
       CRIO_MAJOR_VERSION: '1.28'
       CRIO_VERSION: '1.28.4'
     machine: true
@@ -65,8 +65,8 @@ jobs:
   build-tags-amd64:
     environment:
       CEPH_VERSION: '18.2.1'
-      KUBE_VERSION: '1.28.9'
-      DOCKER_VERSION: '26.0.0-1'
+      KUBE_VERSION: '1.28.15'
+      DOCKER_VERSION: '27.3.1-1'
       CRIO_MAJOR_VERSION: '1.28'
       CRIO_VERSION: '1.28.4'
     machine: true
@@ -128,8 +128,8 @@ jobs:
   build-branches-aarch64:
     environment:
       CEPH_VERSION: '18.2.1'
-      KUBE_VERSION: '1.28.9'
-      DOCKER_VERSION: '26.0.0-1'
+      KUBE_VERSION: '1.28.15'
+      DOCKER_VERSION: '27.3.1-1'
       CRIO_MAJOR_VERSION: '1.28'
       CRIO_VERSION: '1.28.4'
     machine: true
@@ -193,8 +193,8 @@ jobs:
   build-tags-aarch64:
     environment:
       CEPH_VERSION: '18.2.1'
-      KUBE_VERSION: '1.28.9'
-      DOCKER_VERSION: '26.0.0-1'
+      KUBE_VERSION: '1.28.15'
+      DOCKER_VERSION: '27.3.1-1'
       CRIO_MAJOR_VERSION: '1.28'
       CRIO_VERSION: '1.28.4'
     machine: true
