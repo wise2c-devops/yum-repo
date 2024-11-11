@@ -41,7 +41,7 @@ jobs:
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce.el8 docker-ce-cli.el8"
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
               "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
