@@ -3,9 +3,9 @@ jobs:
     environment:
       CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.28.15'
-      DOCKER_VERSION: '27.3.1-1'
+      DOCKER_VERSION: '27.1.1-1'
       CRIO_MAJOR_VERSION: '1.28'
-      CRIO_VERSION: '1.28.4'
+      CRIO_VERSION: '1.28.11'
     machine: true
     steps:
       - checkout
@@ -66,9 +66,9 @@ jobs:
     environment:
       CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.28.15'
-      DOCKER_VERSION: '27.3.1-1'
+      DOCKER_VERSION: '27.1.1-1'
       CRIO_MAJOR_VERSION: '1.28'
-      CRIO_VERSION: '1.28.4'
+      CRIO_VERSION: '1.28.11'
     machine: true
     steps:
       - checkout
@@ -129,9 +129,9 @@ jobs:
     environment:
       CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.28.15'
-      DOCKER_VERSION: '27.3.1-1'
+      DOCKER_VERSION: '27.1.1-1'
       CRIO_MAJOR_VERSION: '1.28'
-      CRIO_VERSION: '1.28.4'
+      CRIO_VERSION: '1.28.11'
     machine: true
     resource_class: arm.medium
     steps:
@@ -194,9 +194,9 @@ jobs:
     environment:
       CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.28.15'
-      DOCKER_VERSION: '27.3.1-1'
+      DOCKER_VERSION: '27.1.1-1'
       CRIO_MAJOR_VERSION: '1.28'
-      CRIO_VERSION: '1.28.4'
+      CRIO_VERSION: '1.28.11'
     machine: true
     resource_class: arm.medium
     steps:
