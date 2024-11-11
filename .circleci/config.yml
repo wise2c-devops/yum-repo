@@ -3,7 +3,7 @@ jobs:
     environment:
       CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.28.15'
-      DOCKER_VERSION: '27.1.1-1'
+      DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.28'
       CRIO_VERSION: '1.28.11'
     machine: true
@@ -41,7 +41,7 @@ jobs:
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos8 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce docker-ce-cli"
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:8.8 bash -c \
               "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
@@ -66,7 +66,7 @@ jobs:
     environment:
       CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.28.15'
-      DOCKER_VERSION: '27.1.1-1'
+      DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.28'
       CRIO_VERSION: '1.28.11'
     machine: true
@@ -129,7 +129,7 @@ jobs:
     environment:
       CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.28.15'
-      DOCKER_VERSION: '27.1.1-1'
+      DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.28'
       CRIO_VERSION: '1.28.11'
     machine: true
@@ -194,7 +194,7 @@ jobs:
     environment:
       CEPH_VERSION: '18.2.1'
       KUBE_VERSION: '1.28.15'
-      DOCKER_VERSION: '27.1.1-1'
+      DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.28'
       CRIO_VERSION: '1.28.11'
     machine: true
