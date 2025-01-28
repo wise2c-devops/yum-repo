@@ -3,10 +3,10 @@ jobs:
     environment:
       CEPH_VERSION_OS8: '16.2.9'
       CEPH_VERSION_OS9: '18.2.4'
-      KUBE_VERSION: '1.31.9'
+      KUBE_VERSION: '1.31.5'
       DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.31'
-      CRIO_VERSION: '1.31.9'
+      CRIO_VERSION: '1.31.5'
     machine: true
     steps:
       - checkout
@@ -67,10 +67,10 @@ jobs:
     environment:
       CEPH_VERSION_OS8: '16.2.9'
       CEPH_VERSION_OS9: '18.2.4'
-      KUBE_VERSION: '1.31.9'
+      KUBE_VERSION: '1.31.5'
       DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.31'
-      CRIO_VERSION: '1.31.9'
+      CRIO_VERSION: '1.31.5'
     machine: true
     steps:
       - checkout
@@ -131,10 +131,10 @@ jobs:
     environment:
       CEPH_VERSION_OS8: '16.2.9'
       CEPH_VERSION_OS9: '18.2.4'
-      KUBE_VERSION: '1.31.9'
+      KUBE_VERSION: '1.31.5'
       DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.31'
-      CRIO_VERSION: '1.31.9'
+      CRIO_VERSION: '1.31.5'
     machine: true
     resource_class: arm.medium
     steps:
@@ -197,10 +197,10 @@ jobs:
     environment:
       CEPH_VERSION_OS8: '16.2.9'
       CEPH_VERSION_OS9: '18.2.4'
-      KUBE_VERSION: '1.31.9'
+      KUBE_VERSION: '1.31.5'
       DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.31'
-      CRIO_VERSION: '1.31.9'
+      CRIO_VERSION: '1.31.5'
     machine: true
     resource_class: arm.medium
     steps:
