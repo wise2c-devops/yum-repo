@@ -1,6 +1,6 @@
 [cri-o]
 name=CRI-O
-baseurl=https://pkgs.k8s.io/addons:/cri-o:/prerelease:/v1.29/rpm/
+baseurl=https://pkgs.k8s.io/addons:/cri-o:/prerelease:/v1.32/rpm/
 enabled=1
 gpgcheck=1
-gpgkey=https://pkgs.k8s.io/addons:/cri-o:/prerelease:/v1.29/rpm/repodata/repomd.xml.key
+gpgkey=https://pkgs.k8s.io/addons:/cri-o:/prerelease:/v1.32/rpm/repodata/repomd.xml.key
