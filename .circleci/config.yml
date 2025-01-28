@@ -1,10 +1,10 @@
 jobs:
   build-branches-amd64:
     environment:
-      KUBE_VERSION: '1.30.1'
+      KUBE_VERSION: '1.30.9'
       DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.30'
-      CRIO_VERSION: '1.30.1'
+      CRIO_VERSION: '1.30.9'
     machine: true
     steps:
       - checkout
@@ -39,10 +39,10 @@ jobs:
 
   build-tags-amd64:
     environment:
-      KUBE_VERSION: '1.30.1'
+      KUBE_VERSION: '1.30.9'
       DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.30'
-      CRIO_VERSION: '1.30.1'
+      CRIO_VERSION: '1.30.9'
     machine: true
     steps:
       - checkout
@@ -77,10 +77,10 @@ jobs:
 
   build-branches-aarch64:
     environment:
-      KUBE_VERSION: '1.30.1'
+      KUBE_VERSION: '1.30.9'
       DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.30'
-      CRIO_VERSION: '1.30.1'
+      CRIO_VERSION: '1.30.9'
     machine: true
     resource_class: arm.medium
     steps:
@@ -116,10 +116,10 @@ jobs:
 
   build-tags-aarch64:
     environment:
-      KUBE_VERSION: '1.30.1'
+      KUBE_VERSION: '1.30.9'
       DOCKER_VERSION: '26.1.3-1'
       CRIO_MAJOR_VERSION: '1.30'
-      CRIO_VERSION: '1.30.1'
+      CRIO_VERSION: '1.30.9'
     machine: true
     resource_class: arm.medium
     steps:
