@@ -26,6 +26,8 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/cri-o.repo /root/default-repo/*.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
+               rm -f /rpms/crio/centos8/conmon-*.rpm && \
+               curl -L -o /rpms/crio/centos8/conmon-2.1.12-4.el10.x86_64.rpm https://rpmfind.net/linux/centos-stream/10-stream/AppStream/x86_64/os/Packages/conmon-2.1.12-4.el10.x86_64.rpm && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/default-repo/*.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                createrepo /rpms/base/centos8 && \
@@ -64,6 +66,8 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/cri-o.repo /root/default-repo/*.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
+               rm -f /rpms/crio/centos8/conmon-*.rpm && \
+               curl -L -o /rpms/crio/centos8/conmon-2.1.12-4.el10.x86_64.rpm https://rpmfind.net/linux/centos-stream/10-stream/AppStream/x86_64/os/Packages/conmon-2.1.12-4.el10.x86_64.rpm && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/default-repo/*.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                createrepo /rpms/base/centos8 && \
@@ -103,6 +107,8 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/cri-o.repo /root/default-repo/*.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
+               rm -f /rpms/crio/centos8/conmon-*.rpm && \
+               curl -L -o /rpms/crio/centos8/conmon-2.1.12-4.el10.aarch64.rpm https://rpmfind.net/linux/centos-stream/10-stream/AppStream/aarch64/os/Packages/conmon-2.1.12-4.el10.aarch64.rpm && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/default-repo/*.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                createrepo /rpms/base/centos8 && \
@@ -142,6 +148,8 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos8 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION} && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/cri-o.repo /root/default-repo/*.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/crio/centos8 cri-o podman && \
+               rm -f /rpms/crio/centos8/conmon-*.rpm && \
+               curl -L -o /rpms/crio/centos8/conmon-2.1.12-4.el10.aarch64.rpm https://rpmfind.net/linux/centos-stream/10-stream/AppStream/aarch64/os/Packages/conmon-2.1.12-4.el10.aarch64.rpm && \
                rm -f /etc/yum.repos.d/*.repo && cp /root/CentOS8.repo /root/docker-ce.repo /root/default-repo/*.repo /etc/yum.repos.d/ && \
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos8 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8 && \
                createrepo /rpms/base/centos8 && \
