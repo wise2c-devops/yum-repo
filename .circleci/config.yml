@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Build an amd64 container image
           command: |
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.5 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/k8s/centos9 && \
@@ -21,12 +21,12 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
-            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.5 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
-            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.5 bash -c \
               "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS9}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/ceph/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
@@ -77,7 +77,7 @@ jobs:
       - run:
           name: Build an amd64 container image
           command: |
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.5 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/k8s/centos9 && \
@@ -85,12 +85,12 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
-            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.5 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
-            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.5 bash -c \
               "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS9}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/ceph/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos9 ceph ceph-radosgw rbd-nbd rbd-mirror"
@@ -142,7 +142,7 @@ jobs:
       - run:
           name: Build an aarch64 container image
           command: |
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.5 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/k8s/centos9 && \
@@ -150,12 +150,12 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
-            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.5 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
-            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.5 bash -c \
               "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS9}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/ceph/centos9"
                # && \
@@ -208,7 +208,7 @@ jobs:
       - run:
           name: Build an aarch64 container image
           command: |
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes.repo:/etc/yum.repos.d/kubernetes.repo -v ${PWD}/cri-o.repo:/etc/yum.repos.d/cri-o.repo rockylinux:9.5 bash -c \
               "yum remove -y tar && \
                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/k8s/centos9 && \
@@ -216,12 +216,12 @@ jobs:
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 podman cri-o crun flatpak-selinux container-selinux policycoreutils-python-utils python3-policycoreutils python3-libsemanage && \
                yum -y install --downloadonly --downloaddir=/rpms/k8s/centos9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
 
-            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.5 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos9 && \
                yum -y install --downloadonly --downloaddir=/rpms/docker/centos9 docker-ce-${DOCKER_VERSION}.el9 docker-ce-cli-${DOCKER_VERSION}.el9"
 
-            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms rockylinux:9.5 bash -c \
               "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS9}/el9/noarch/ceph-release-1-1.el9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                mkdir -p /rpms/ceph/centos9"
                # && \
