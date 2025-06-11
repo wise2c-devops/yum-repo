@@ -42,10 +42,10 @@ jobs:
             docker run -t --rm -v ${PWD}/rpms:/rpms almalinux:10.0 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos10 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos10 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos10 docker-ce-${DOCKER_VERSION}.el10 docker-ce-cli-${DOCKER_VERSION}.el10"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms almalinux:10.0 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS8}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS8}.el10/noarch/ceph-release-1-1.el10.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
                mkdir -p /rpms/ceph/centos10 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos10 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -106,10 +106,10 @@ jobs:
             docker run -t --rm -v ${PWD}/rpms:/rpms almalinux:10.0 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos10 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos10 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos10 docker-ce-${DOCKER_VERSION}.el10 docker-ce-cli-${DOCKER_VERSION}.el10"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms almalinux:10.0 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS8}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS8}.el10/noarch/ceph-release-1-1.el10.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
                mkdir -p /rpms/ceph/centos10 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos10 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -172,10 +172,10 @@ jobs:
             docker run -t --rm -v ${PWD}/rpms:/rpms almalinux:10.0 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos10 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos10 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos10 docker-ce-${DOCKER_VERSION}.el10 docker-ce-cli-${DOCKER_VERSION}.el10"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms almalinux:10.0 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS8}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS8}.el10/noarch/ceph-release-1-1.el10.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
                mkdir -p /rpms/ceph/centos10 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos10 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
@@ -238,10 +238,10 @@ jobs:
             docker run -t --rm -v ${PWD}/rpms:/rpms almalinux:10.0 bash -c \
               "curl -L -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo && \
                mkdir -p /rpms/docker/centos10 && \
-               yum -y install --downloadonly --downloaddir=/rpms/docker/centos10 docker-ce-${DOCKER_VERSION}.el8 docker-ce-cli-${DOCKER_VERSION}.el8"
+               yum -y install --downloadonly --downloaddir=/rpms/docker/centos10 docker-ce-${DOCKER_VERSION}.el10 docker-ce-cli-${DOCKER_VERSION}.el10"
 
             docker run -t --rm -v ${PWD}/rpms:/rpms almalinux:10.0 bash -c \
-              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS8}/el8/noarch/ceph-release-1-1.el8.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
+              "yum install -y https://download.ceph.com/rpm-${CEPH_VERSION_OS8}.el10/noarch/ceph-release-1-1.el10.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
                mkdir -p /rpms/ceph/centos10 && \
                yum -y install --downloadonly --downloaddir=/rpms/ceph/centos10 ceph ceph-radosgw rbd-nbd rbd-mirror"
                
