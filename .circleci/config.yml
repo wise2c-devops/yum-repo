@@ -15,7 +15,7 @@ jobs:
           command: |
             curl -L -o ${PWD}/centos9-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_9_Stream/devel:kubic:libcontainers:stable.repo
             curl -L -o ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_9_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-amd64.repo:/etc/yum.repos.d/kubernetes.repo oraclelinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-amd64.repo:/etc/yum.repos.d/kubernetes.repo oraclelinux:9 bash -c \
               "dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                dnf install -y dnf-utils && \
                dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
@@ -113,7 +113,7 @@ jobs:
           command: |
             curl -L -o ${PWD}/centos9-devel-kubic-libcontainers-stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_9_Stream/devel:kubic:libcontainers:stable.repo
             curl -L -o ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/${CRIO_MAJOR_VERSION}/CentOS_9_Stream/devel:kubic:libcontainers:stable:cri-o:${CRIO_MAJOR_VERSION}.repo
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-aarch64.repo:/etc/yum.repos.d/kubernetes.repo oraclelinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/kubernetes-aarch64.repo:/etc/yum.repos.d/kubernetes.repo oraclelinux:9 bash -c \
               "dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
                dnf install -y dnf-utils && \
                dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
