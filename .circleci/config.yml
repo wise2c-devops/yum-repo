@@ -24,7 +24,7 @@ jobs:
                dnf -y install --downloadonly --downloaddir=/rpms/k8s/oraclelinux9 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                dnf -y install --downloadonly --downloaddir=/rpms/k8s/oraclelinux9 open-vm-tools nfs-utils && \
                dnf -y install --downloadonly --downloaddir=/rpms/k8s/oraclelinux9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo oraclelinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo oraclelinux:9 bash -c \
               "mkdir -p /rpms/crio/oraclelinux9 && \
                dnf install -y createrepo_c && \
                dnf -y install --downloadonly --downloaddir=/rpms/crio/oraclelinux9 podman cri-o && \
@@ -122,7 +122,7 @@ jobs:
                dnf -y install --downloadonly --downloaddir=/rpms/k8s/oraclelinux9 chrony audit rsync jq git tcpdump nc bind-utils net-tools ipvsadm graphviz && \
                dnf -y install --downloadonly --downloaddir=/rpms/k8s/oraclelinux9 nfs-utils && \
                dnf -y install --downloadonly --downloaddir=/rpms/k8s/oraclelinux9 kubectl-${KUBE_VERSION} kubelet-${KUBE_VERSION} kubeadm-${KUBE_VERSION}"
-            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo oraclelinux:9.6 bash -c \
+            docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/centos9-devel-kubic-libcontainers-stable.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable.repo -v ${PWD}/centos9-devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo:/etc/yum.repos.d/devel-kubic-libcontainers-stable-cri-o-${CRIO_MAJOR_VERSION}.repo oraclelinux:9 bash -c \
               "mkdir -p /rpms/crio/oraclelinux9 && \
                dnf install -y createrepo_c && \
                dnf -y install --downloadonly --downloaddir=/rpms/crio/oraclelinux9 podman cri-o && \
